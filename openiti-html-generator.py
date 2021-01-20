@@ -85,26 +85,39 @@ def html_open():
             }
 
 
-            .dropdown-item {
+            .toc-item {
                 white-space: normal;
-                
                 border-bottom: 1px solid #d3d3d3;
+                text-decoration:none;
             }
 
-            .dropdown{
+            .toc{
                 text-align:left;
                 width:auto;
                 position:fixed;
                 z-index:999;
             }
-            .dropdown-menu {
+            .toc-menu {
                 max-height:90vh;
                 overflow-y:auto;
                 overflow-x:hidden;
                 
             }
-            select, option { width: __; }
+            
+            .collapsibleList li{
+              list-style-image : url('img/button.png');
+              cursor           : auto;
+            }
 
+            li.collapsibleListOpen{
+              list-style-image : url('img/button-open.png');
+              cursor           : pointer;
+            }
+
+            li.collapsibleListClosed{
+              list-style-image : url('img/button-closed.png');
+              cursor           : pointer;
+            }
             p{
                 text-indent: 10px;
             }
@@ -138,6 +151,7 @@ def html_open():
         }
 
         </style>
+        <script type="text/javascript" src="js/CollapsibleLists.js"></script>
         
     </head>
     <body>
@@ -148,7 +162,12 @@ def html_open():
 
 
 def html_close():
-    html_closing_tag = "</div></div></div></body></html>"
+    html_closing_tag = """</div></div></div></body>
+        <script type="text/javascript">
+            CollapsibleLists.apply();
+            console.log("Applied");
+        </script>
+    </html>"""
     return html_closing_tag
 
 
@@ -205,76 +224,116 @@ def convert_text(s):
     isnad_regex = r'@Auto_ISB@\s(W*.+)\s@Auto_ISE@' # is the W in this regex correct?
     s = re.sub(isnad_regex, r"<span class='isnad'>\1</span>", s, flags=re.DOTALL)
 
-
     return str(s)
     #return s
 
+def toc_to_ul(toc):
+    """Convert the table of contents into a collapsible list
 
-def html_builder(data):
-    full_html = ""
-    s = data.read().decode('utf-8')
+    See http://code.iamkate.com/javascript/collapsible-lists/
+    """
+    ul = "<ul class='collapsibleList'>\n"
+    level = 1
+    for a in toc:
+        lev = int(re.findall("l(\d+)", a)[0])
+        if lev > level:
+            while lev > level:
+                ul += "{}<ul class='collapsibleList'>\n".format(" "*level*4)
+                level += 1
+        elif lev < level:
+            while lev < level:
+                ul += "\n{}</li>".format(" "*level*4)
+                level -= 1
+                ul += "\n{}</ul>\n".format(" "*level*4)
+
+        ul += "{0}<li class='collapsibleListClosed'>{1}\n".format(" "*level*4, a)
+    while level > 0:
+        ul += "\n{}</li>".format(" "*level*4)
+        level -= 1
+        ul += "\n{}</ul>\n".format(" "*level*4)
+    return ul
+
+
+def toc_panel(html):
+    """Create the table of contents panel
+
+    Args:
+        html (str): OpenITI text converted to html
+    """
+    toc = []
+    for level, title in re.findall("<h\d+ .+?l(\d+).+?id='([^']+)", html):
+        tag = """
+                       <a class='toc-item l{0}' href='#{1}'>{1}</a>"""
+        toc.append(tag.format(level, title))
+    toc = toc_to_ul(toc)
+    toc = """
+                <div class='col-md-4' id='right'>
+                    <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>
+                        {}
+                    </div>
+                </div>
+    """.format(toc)
+    return toc
+
+def html_builder(s, uri):
+    """Build the body of the html file
+
+    Args:
+        s (str): OpenITI text as string
+    """
+    s = convert_text(s)
+    
+    # create right navigation panel: 
+    right = toc_panel(s)
 
     # format main text as html:
-    body = """ <div class='row p-30'>
+    header = """
+    <div class='row p-30'>
         <div class='col-md-12'>
-        	<div class="row top-heading-panel content-outer-spacing">
-				<div class="col-md-12">
-					<h3>
-						Title of the Book
-					</h3>
-				</div>
-			</div> 
+            <div class="row top-heading-panel content-outer-spacing">
+	        <div class="col-md-12">
+		    <h3>
+		        {}
+		    </h3>
+		</div>
+		<div class="col-md-12" id="meta">
+		</div/
+	    </div> 
             <div class="row">
-            """
+    """.format(uri)
+
 
     left = """
-             
-            <div class="col-md-8">
-            <div class='shadow p-3 mb-5 bg-white rounded content-outer-spacing'>
-    """
-    left += convert_text(s) + "</div></div>"
-
-    # create right navigation panel: 
-    right = """
-    <div class='col-md-4' id='right'>
-    <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>
-       
-    """
-    for level, title in re.findall("<h\d+ .+?l(\d+).+?id='([^']+)", left):
-        right += " <a class='dropdown-item l{0}' href='#{1}'>{1}</a>\n".format(level, title)
-    right += """
-        </div></div>
-    """
+                <div class="col-md-8" id="left">
+                    <div class='shadow p-3 mb-5 bg-white rounded content-outer-spacing'>
+                        {}
+                    </div>
+                </div>
+    """.format(s)
     
-   
+    footer="""
+                <div class="row" id='footer'><div class="col-md-12">
+                    This file is produced based on the data available on the KITAB/OpenITI Corpus.  The KITAB Project is funded by ERC. All right reserved as per Apache Licence... 
+		</div>
+	    </div>
+    """
 
-
-   
-
-    ms = left.split(r'ms')
-    # print(len(ms)-1)
-    # print(ms)
-    
-    full_html += body
+    full_html = html_open()
+    full_html += header
     full_html += right
     full_html += left
-    
-    
-    footer="""<div class="row" id='footer'><div class="col-md-12">
-        This file is produced based on the data available on the KITAB/OpenITI Corpus.  The KITAB Project is funded by ERC. All right reserved as per Apache Licence... 
-		</div>
-	</div>"""
     full_html += footer
+    full_html += html_close()
+
     return full_html
 
 
-def create_html_file(data):
+def create_html_file(html_str):
     print("SAVING AS", book_name + ".html")
     with open(book_name + ".html", "w", encoding="utf-8") as e:
-        e.write(html_open())
-
-        e.write(data)
-        e.write(html_close())
+        #e.write(html_open())
+        e.write(html_str)
+        #e.write(html_close())
 
 
 # test = """\
@@ -294,6 +353,6 @@ def create_html_file(data):
 # print(convert_text(test))
 # input()
 
-
-html_object = html_builder(data)
-create_html_file(html_object)
+s = data.read().decode('utf-8')
+html_str = html_builder(s, ".".join(book_name.split(".")[:2]))
+create_html_file(html_str)
