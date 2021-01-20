@@ -87,8 +87,8 @@ def html_open():
 
             .toc-item {
                 white-space: normal;
-                
                 border-bottom: 1px solid #d3d3d3;
+                text-decoration:none;
             }
 
             .toc{
@@ -235,17 +235,13 @@ def toc_to_ul(toc):
     ul = "<ul class='collapsibleList'>\n"
     level = 1
     for a in toc:
-        #print(a)
         lev = int(re.findall("l(\d+)", a)[0])
-        #print("lev:", lev, "level:", level)
         if lev > level:
             while lev > level:
-                #print("lev:", lev, "level:", level)
                 ul += "{}<ul class='collapsibleList'>\n".format(" "*level*4)
                 level += 1
         elif lev < level:
             while lev < level:
-                #print("lev:", lev, "level:", level)
                 ul += "\n{}</li>".format(" "*level*4)
                 level -= 1
                 ul += "\n{}</ul>\n".format(" "*level*4)
@@ -255,7 +251,6 @@ def toc_to_ul(toc):
         ul += "\n{}</li>".format(" "*level*4)
         level -= 1
         ul += "\n{}</ul>\n".format(" "*level*4)
-    print(ul)
     return ul
 
 
@@ -271,7 +266,6 @@ def toc_panel(html):
                        <a class='toc-item l{0}' href='#{1}'>{1}</a>"""
         toc.append(tag.format(level, title))
     toc = toc_to_ul(toc)
-    #print(BeautifulSoup(toc).prettify())
     toc = """
                 <div class='col-md-4' id='right'>
                     <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>
@@ -281,7 +275,7 @@ def toc_panel(html):
     """.format(toc)
     return toc
 
-def html_builder(s):
+def html_builder(s, uri):
     """Build the body of the html file
 
     Args:
@@ -299,14 +293,14 @@ def html_builder(s):
             <div class="row top-heading-panel content-outer-spacing">
 	        <div class="col-md-12">
 		    <h3>
-		        Title of the Book
+		        {}
 		    </h3>
 		</div>
 		<div class="col-md-12" id="meta">
 		</div/
 	    </div> 
             <div class="row">
-    """
+    """.format(uri)
 
 
     left = """
@@ -360,5 +354,5 @@ def create_html_file(html_str):
 # input()
 
 s = data.read().decode('utf-8')
-html_str = html_builder(s)
+html_str = html_builder(s, ".".join(book_name.split(".")[:2]))
 create_html_file(html_str)
