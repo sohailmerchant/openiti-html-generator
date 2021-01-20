@@ -94,8 +94,7 @@ def html_open():
             .toc{
                 text-align:left;
                 width:auto;
-                position:fixed;
-                z-index:999;
+
             }
             .toc-menu {
                 max-height:90vh;
@@ -128,27 +127,53 @@ def html_open():
                 padding-right: 20px;
             }
 
-          .p-30{
+            .p-30{
 
               padding:30px;
-          }
+            }
             
             #right {
-                    
-            direction:ltr; 
-            overflow:auto; 
-        }
+                position:fixed;
+                direction:ltr;
+                height:90vh;
+                overflow:auto;
+            }
+            
+            /* width */
+            ::-webkit-scrollbar {
+              width: 10px;
+            }
 
-        .top-heading-panel{       
+            /* Track */
+            ::-webkit-scrollbar-track {
+              background: #f1f1f1; 
+            }
+             
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+              background: #888; 
+            }
 
-                direction: rtl;
-                background-color: #fafafa;
-        }
-        #footer{
-        text-align: center;
-        direction: ltr ;
-        background-color: #fafafa;
-        }
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+              background: #555; 
+            }
+            
+            #left {
+                margin-right:35vw;
+            }
+
+
+            .top-heading-panel{       
+
+                    direction: rtl;
+                    background-color: #fafafa;
+            }
+            #footer{
+            text-align: center;
+            direction: ltr ;
+            background-color: #fafafa;
+            }
 
         </style>
         <script type="text/javascript" src="js/CollapsibleLists.js"></script>
@@ -268,7 +293,7 @@ def toc_panel(html):
     toc = toc_to_ul(toc)
     toc = """
                 <div class='col-md-4' id='right'>
-                    <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>
+                    <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing'>
                         {}
                     </div>
                 </div>
@@ -280,6 +305,7 @@ def html_builder(s, uri):
 
     Args:
         s (str): OpenITI text as string
+        uri (str): OpenITI version URI of the text
     """
     s = convert_text(s)
     
@@ -300,7 +326,7 @@ def html_builder(s, uri):
 		</div/
 	    </div> 
             <div class="row">
-    """.format(uri)
+    """.format(".".join(uri.split(".")[:2]))
 
 
     left = """
@@ -354,5 +380,5 @@ def create_html_file(html_str):
 # input()
 
 s = data.read().decode('utf-8')
-html_str = html_builder(s, ".".join(book_name.split(".")[:2]))
+html_str = html_builder(s, book_name)
 create_html_file(html_str)
