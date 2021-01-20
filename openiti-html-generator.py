@@ -96,12 +96,6 @@ def html_open():
                 width:auto;
 
             }
-            .toc-menu {
-                max-height:90vh;
-                overflow-y:auto;
-                overflow-x:hidden;
-                
-            }
             
             .collapsibleList li{
               list-style-image : url('img/button.png');
@@ -135,7 +129,10 @@ def html_open():
             #right {
                 position:fixed;
                 direction:ltr;
-                height:90vh;
+                
+            }
+            .right-panel {
+                max-height: 75vh;
                 overflow:auto;
             }
             
