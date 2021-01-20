@@ -85,26 +85,39 @@ def html_open():
             }
 
 
-            .dropdown-item {
+            .toc-item {
                 white-space: normal;
                 
                 border-bottom: 1px solid #d3d3d3;
             }
 
-            .dropdown{
+            .toc{
                 text-align:left;
                 width:auto;
                 position:fixed;
                 z-index:999;
             }
-            .dropdown-menu {
+            .toc-menu {
                 max-height:90vh;
                 overflow-y:auto;
                 overflow-x:hidden;
                 
             }
-            select, option { width: __; }
+            
+            .collapsibleList li{
+              list-style-image : url('img/button.png');
+              cursor           : auto;
+            }
 
+            li.collapsibleListOpen{
+              list-style-image : url('img/button-open.png');
+              cursor           : pointer;
+            }
+
+            li.collapsibleListClosed{
+              list-style-image : url('img/button-closed.png');
+              cursor           : pointer;
+            }
             p{
                 text-indent: 10px;
             }
@@ -138,6 +151,7 @@ def html_open():
         }
 
         </style>
+        <script type="text/javascript" src="js/CollapsibleLists.js"></script>
         
     </head>
     <body>
@@ -148,7 +162,12 @@ def html_open():
 
 
 def html_close():
-    html_closing_tag = "</div></div></div></body></html>"
+    html_closing_tag = """</div></div></div></body>
+        <script type="text/javascript">
+            CollapsibleLists.apply();
+            console.log("Applied");
+        </script>
+    </html>"""
     return html_closing_tag
 
 
@@ -208,6 +227,37 @@ def convert_text(s):
     return str(s)
     #return s
 
+def toc_to_ul(toc):
+    """Convert the table of contents into a collapsible list
+
+    See http://code.iamkate.com/javascript/collapsible-lists/
+    """
+    ul = "<ul class='collapsibleList'>\n"
+    level = 1
+    for a in toc:
+        #print(a)
+        lev = int(re.findall("l(\d+)", a)[0])
+        #print("lev:", lev, "level:", level)
+        if lev > level:
+            while lev > level:
+                #print("lev:", lev, "level:", level)
+                ul += "{}<ul class='collapsibleList'>\n".format(" "*level*4)
+                level += 1
+        elif lev < level:
+            while lev < level:
+                #print("lev:", lev, "level:", level)
+                ul += "\n{}</li>".format(" "*level*4)
+                level -= 1
+                ul += "\n{}</ul>\n".format(" "*level*4)
+
+        ul += "{0}<li class='collapsibleListClosed'>{1}\n".format(" "*level*4, a)
+    while level > 0:
+        ul += "\n{}</li>".format(" "*level*4)
+        level -= 1
+        ul += "\n{}</ul>\n".format(" "*level*4)
+    print(ul)
+    return ul
+
 
 def toc_panel(html):
     """Create the table of contents panel
@@ -215,11 +265,13 @@ def toc_panel(html):
     Args:
         html (str): OpenITI text converted to html
     """
-    toc = ""
+    toc = []
     for level, title in re.findall("<h\d+ .+?l(\d+).+?id='([^']+)", html):
         tag = """
-                       <a class='dropdown-item l{0}' href='#{1}'>{1}</a>"""
-        toc += tag.format(level, title)
+                       <a class='toc-item l{0}' href='#{1}'>{1}</a>"""
+        toc.append(tag.format(level, title))
+    toc = toc_to_ul(toc)
+    #print(BeautifulSoup(toc).prettify())
     toc = """
                 <div class='col-md-4' id='right'>
                     <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>

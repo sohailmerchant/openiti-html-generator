@@ -71,26 +71,39 @@
             }
 
 
-            .dropdown-item {
+            .toc-item {
                 white-space: normal;
                 
                 border-bottom: 1px solid #d3d3d3;
             }
 
-            .dropdown{
+            .toc{
                 text-align:left;
                 width:auto;
                 position:fixed;
                 z-index:999;
             }
-            .dropdown-menu {
+            .toc-menu {
                 max-height:90vh;
                 overflow-y:auto;
                 overflow-x:hidden;
                 
             }
-            select, option { width: __; }
+            
+            .collapsibleList li{
+              list-style-image : url('img/button.png');
+              cursor           : auto;
+            }
 
+            li.collapsibleListOpen{
+              list-style-image : url('img/button-open.png');
+              cursor           : pointer;
+            }
+
+            li.collapsibleListClosed{
+              list-style-image : url('img/button-closed.png');
+              cursor           : pointer;
+            }
             p{
                 text-indent: 10px;
             }
@@ -124,6 +137,7 @@
         }
 
         </style>
+        <script type="text/javascript" src="js/CollapsibleLists.js"></script>
         
     </head>
     <body>
@@ -144,18 +158,41 @@
     
                 <div class='col-md-4' id='right'>
                     <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing h-100'>
-                        
-                       <a class='dropdown-item l1' href='#الفن التاسع من الجملة الأولى من كتاب الشفاء لأبى على حسين بن عبد الله ابن سينا البخارى'>الفن التاسع من الجملة الأولى من كتاب الشفاء لأبى على حسين بن عبد الله ابن سينا البخارى</a>
-                       <a class='dropdown-item l2' href='#فصل فى الشعر مطلقا وأصناف الصيغ الشعرية وأصناف الأشعار اليونانية.'>فصل فى الشعر مطلقا وأصناف الصيغ الشعرية وأصناف الأشعار اليونانية.</a>
-                       <a class='dropdown-item l2' href='#فصل فى أصناف الأغراض الكلية والمحاكيات الكلية التى للشعر.'>فصل فى أصناف الأغراض الكلية والمحاكيات الكلية التى للشعر.</a>
-                       <a class='dropdown-item l2' href='#فصل فى الإخبار عن كيفية ابتداء نشاء الشعر وأصنافه.'>فصل فى الإخبار عن كيفية ابتداء نشاء الشعر وأصنافه.</a>
-                       <a class='dropdown-item l2' href='#فصل فى مناسبة مقادير الأبيات مع الأغراض وخصوصا فى اطراغوذيا وبيان أجزاء اطراغوذيا.'>فصل فى مناسبة مقادير الأبيات مع الأغراض وخصوصا فى اطراغوذيا وبيان أجزاء اطراغوذيا.</a>
-                       <a class='dropdown-item l2' href='#فصل فى حسن ترتيب الشعر وخصوصا اطراغوذيا وفى أجزاء الكلام المخيل الخرافى فى اطراغوذيا.'>فصل فى حسن ترتيب الشعر وخصوصا اطراغوذيا وفى أجزاء الكلام المخيل الخرافى فى اطراغوذيا.</a>
-                       <a class='dropdown-item l2' href='#فصل فى اجزاء طراغوذيا بحسب الترتيب والإنشاد لا بحسب المعانى ووجوه من القسمة أخرى وما يحسن من التدبير فى كل جزء وخصوصا ما يتعلق بالمعنى.'>فصل فى اجزاء طراغوذيا بحسب الترتيب والإنشاد لا بحسب المعانى ووجوه من القسمة أخرى وما يحسن من التدبير فى كل جزء وخصوصا ما يتعلق بالمعنى.</a>
-                       <a class='dropdown-item l2' href='#فصل فى قسمة الألفاظ وموافقتها لأنواع الشعر وفصل الكلام فى اطراغوذيا ونشبيه أشعار أخرى به.'>فصل فى قسمة الألفاظ وموافقتها لأنواع الشعر وفصل الكلام فى اطراغوذيا ونشبيه أشعار أخرى به.</a>
-                       <a class='dropdown-item l2' href='#فصل فى وجوه تقصير الشاعر وفى تفضيل طراغوذيا على ما يشبهه.'>فصل فى وجوه تقصير الشاعر وفى تفضيل طراغوذيا على ما يشبهه.</a>
-                       <a class='dropdown-item l1' href='#من كتاب شرح عيون الحكمة لابن سينا لخاتمة المحققين فخر الدين الرازى'>من كتاب شرح عيون الحكمة لابن سينا لخاتمة المحققين فخر الدين الرازى</a>
-                       <a class='dropdown-item l2' href='#فصل فى قرابطيقى وهو الشعر قال الشيخ القياسات الشعرية هى من مقدمات'>فصل فى قرابطيقى وهو الشعر قال الشيخ القياسات الشعرية هى من مقدمات</a>
+                        <ul class='collapsibleList'>
+    <li class='collapsibleListClosed'>
+                       <a class='toc-item l1' href='#الفن التاسع من الجملة الأولى من كتاب الشفاء لأبى على حسين بن عبد الله ابن سينا البخارى'>الفن التاسع من الجملة الأولى من كتاب الشفاء لأبى على حسين بن عبد الله ابن سينا البخارى</a>
+    <ul class='collapsibleList'>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى الشعر مطلقا وأصناف الصيغ الشعرية وأصناف الأشعار اليونانية.'>فصل فى الشعر مطلقا وأصناف الصيغ الشعرية وأصناف الأشعار اليونانية.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى أصناف الأغراض الكلية والمحاكيات الكلية التى للشعر.'>فصل فى أصناف الأغراض الكلية والمحاكيات الكلية التى للشعر.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى الإخبار عن كيفية ابتداء نشاء الشعر وأصنافه.'>فصل فى الإخبار عن كيفية ابتداء نشاء الشعر وأصنافه.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى مناسبة مقادير الأبيات مع الأغراض وخصوصا فى اطراغوذيا وبيان أجزاء اطراغوذيا.'>فصل فى مناسبة مقادير الأبيات مع الأغراض وخصوصا فى اطراغوذيا وبيان أجزاء اطراغوذيا.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى حسن ترتيب الشعر وخصوصا اطراغوذيا وفى أجزاء الكلام المخيل الخرافى فى اطراغوذيا.'>فصل فى حسن ترتيب الشعر وخصوصا اطراغوذيا وفى أجزاء الكلام المخيل الخرافى فى اطراغوذيا.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى اجزاء طراغوذيا بحسب الترتيب والإنشاد لا بحسب المعانى ووجوه من القسمة أخرى وما يحسن من التدبير فى كل جزء وخصوصا ما يتعلق بالمعنى.'>فصل فى اجزاء طراغوذيا بحسب الترتيب والإنشاد لا بحسب المعانى ووجوه من القسمة أخرى وما يحسن من التدبير فى كل جزء وخصوصا ما يتعلق بالمعنى.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى قسمة الألفاظ وموافقتها لأنواع الشعر وفصل الكلام فى اطراغوذيا ونشبيه أشعار أخرى به.'>فصل فى قسمة الألفاظ وموافقتها لأنواع الشعر وفصل الكلام فى اطراغوذيا ونشبيه أشعار أخرى به.</a>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى وجوه تقصير الشاعر وفى تفضيل طراغوذيا على ما يشبهه.'>فصل فى وجوه تقصير الشاعر وفى تفضيل طراغوذيا على ما يشبهه.</a>
+
+        </li>
+    </ul>
+    <li class='collapsibleListClosed'>
+                       <a class='toc-item l1' href='#من كتاب شرح عيون الحكمة لابن سينا لخاتمة المحققين فخر الدين الرازى'>من كتاب شرح عيون الحكمة لابن سينا لخاتمة المحققين فخر الدين الرازى</a>
+    <ul class='collapsibleList'>
+        <li class='collapsibleListClosed'>
+                       <a class='toc-item l2' href='#فصل فى قرابطيقى وهو الشعر قال الشيخ القياسات الشعرية هى من مقدمات'>فصل فى قرابطيقى وهو الشعر قال الشيخ القياسات الشعرية هى من مقدمات</a>
+
+        </li>
+    </ul>
+
+    </li>
+</ul>
+
                     </div>
                 </div>
     
@@ -946,4 +983,9 @@
                     This file is produced based on the data available on the KITAB/OpenITI Corpus.  The KITAB Project is funded by ERC. All right reserved as per Apache Licence... 
 		</div>
 	    </div>
-    </div></div></div></body></html>
+    </div></div></div></body>
+        <script type="text/javascript">
+            CollapsibleLists.apply();
+            console.log("Applied");
+        </script>
+    </html>
