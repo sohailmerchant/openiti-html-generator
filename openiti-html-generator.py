@@ -1,6 +1,8 @@
 import urllib.request
 import re
 from bs4 import BeautifulSoup
+# load repl list and replace functions from config.py: 
+from config import *
 
 book_url = "https://raw.githubusercontent.com/OpenITI/"
 book_url += "0450AH/master/data/0428IbnSina/0428IbnSina.Shifa/0428IbnSina.Shifa.GRAR000034-ara1.completed"
@@ -195,63 +197,22 @@ def html_close():
 
 
 def convert_text(s):
-    def format_section_title(m):
-        pipes = m.group(1)
-        title = m.group(2)
-        title_link = re.sub(r"\( *([^\(]*) *\)", r"\1", title).strip() # remove parenthesis from title
-        #title_link = re.sub(r"""<span id='ms\d+'></span>""", "", title_link)
-        title_link = re.sub(" *<.+> *", " ", title_link) # remove all tags within title
-        if "$" in pipes:
-            return "<h{0} class='dic-item l{0}' id='{1}'>{2}</h{0}>\n".format(3, title_link, title)
+    """Convert an OpenITI text to html \
+    using the `repl` list of patterns and replacements in the config.py file
+
+    Args:
+        s (str): text in OpenITI mARkdown format
+
+    Returns:
+        s (str): text with html markup
+    """
+    for d in repl: # loaded from config.py
+        if "flags" in d:
+            s = re.sub(d["ptrn"], d["repl"], s, flags=d["flags"])
         else:
-            return "<h{0} class='l{0}' id='{1}'>{2}</h{0}>\n".format(len(pipes), title_link, title)
-
-
-    # remove superfluous characters:
-    s = re.sub(r'~~', "", s)
-    s = re.sub("# Page", "Page", s)
-
-    # remove header: 
-    s = re.sub("######OpenITI#.+?#META#Header#End#[\r\n]+(?:PageV0+P0+[\r\n]+)?", "\n", s, flags=re.DOTALL)
-    
-    # tag milestones:
-    ms_patttern = r'(ms\d+)'
-    s = re.sub(ms_patttern, r"<span id='\1'></span>", s, flags=re.DOTALL)
-
-    # tag poetry:
-    poetry_regex = r"[\r\n]+# (.*)%~%(.*)"
-    repl = r"\n<p class='poetry'><span class='hemistich-1'>\1</span><span class='hemistich-2'>\2</span></p>\n"
-    s = re.sub(poetry_regex, repl, s)
-
-    # tag paragraphs: 
-    para_regex = r"[\r\n]+# (.+?)(?=[\r\n]+#|\Z|[\r\n]*<p)"
-    s = re.sub(para_regex, r"\n<p>\n\1\n</p>\n", s, flags=re.DOTALL)
-
-    # page numbers:
-    page_regex = r'PageV([^P]+)P(\w+)' # in some cases this is not a number
-    page_div = r"""
-        <div class='pageno-container'>
-            <a class='pageno' href='#' id='v\1p\2'> Vol. \1, p. \2</a>
-        </div>"""
-    s = re.sub(page_regex, page_div, s)
-    
-    s = re.sub(r"### \|([A-Z]+)\|\s+(.*?)(?=###)",
-               r"<div class='\1'>\n\2</div>\n",
-               s, flags=re.DOTALL)
-
-    # section titles: 
-    s = re.sub("### ([\$\|]+) (.*)", format_section_title, s)
-
-    # Qur'an quotes:
-    quran_regex = r'@QB@\s?(.*?)@QE@\s?' # consider using "[^@]" instead of "."
-    s = re.sub(quran_regex, r"<span class='quran'>\1</span>", s, flags=re.DOTALL)
-
-    # isnads:
-    isnad_regex = r'@Auto_ISB@\s(W*.+)\s@Auto_ISE@' # is the W in this regex correct?
-    s = re.sub(isnad_regex, r"<span class='isnad'>\1</span>", s, flags=re.DOTALL)
-
-    return str(s)
-    #return s
+            s = re.sub(d["ptrn"], d["repl"], s)
+    return s
+        
 
 def toc_to_ul(toc):
     """Convert the table of contents into a collapsible list
