@@ -146,14 +146,10 @@ def toc_panel(html):
     return toc
 
 def split_volumes(s):
-    print("start splitting volumes...")
-    print("length before splitting:", len(s))
-    print("last 100 characters:")
-    print(s[-100:])
-##    vol_regex = r""".+
-##    +<div class='pageno-container'>
-##        +<a class='pageno' href='#' id='v{}p\w+'> Vol. \w+, p. \w+</a>
-##    +</div>"""
+    """Convoluted way of splitting the html strings into volumes.
+
+    This is probably better done before the string is converted into html...
+    """
     vol_regex = "(<a class='pageno' href='#' id='v{}p\w+'> *Vol. \w+, p. \w+</a>)"
     volumes = set(re.findall("v([^p]{1,3})p\d+", s))
     vols = []
@@ -191,49 +187,16 @@ def split_volumes(s):
     print("total length:", total_len)
     return vols
 
-        
-        
-        
-##    page_regex = "(id='v[^p]{1,3}p\w+')"
-##    pages = re.split(page_regex, s)
-##    current_vol_no = "01"
-##    vols = []
-##    current_vol = ""
-##    for i, page in enumerate(pages):
-##        print(i)
-##        if re.match(page_regex, page):
-##            current_vol += page
-##        else:
-##            if not current_vol:
-##                current_vol += page
-##            else:
-##                try:
-##                    vol_no = re.findall("id='v([^p]+)", pages[i+1])[0]
-##                except:
-##                    continue
-##                if not vol_no == current_vol_no:
-##                    print("new vol_no:", vol_no)
-##                    current_vol_no = vol_no
-##                    vols.append(current_vol)
-##                    current_vol += page
-##                else:
-##                    current_vol += page
-##    if current_vol:
-##        vols.append(current_vol)
-##    print("vols:", len(vols))
-##    for vol in vols:
-##        print(len(vol))
-##    
-##    return vols
-
 def add_page_vol_id_to_tags(html):
     """Create id for each heading tag that includes the volume number:
-    <h2 class='l2' id='title X'>  >>  <h2 class='l2' vol='01' page='10' id="title X">"""
+    <h2 class='l2' id='title X'>  >>  <h2 class='l2' vol='01' page='10' id="title X">.
+
+    This is the function that takes most time. There should be a faster way to do this."""
     new_html = html
     page_regex = "(id='v[^p]{1,3}p\w+')"
     srt = time.time()
     pages = re.split(page_regex, html)
-    print("splitting pages:", time.time()-srt)
+    #print("splitting pages:", time.time()-srt) # 60ms
     id_ = 0
     for i, page in enumerate(pages):
         if re.search(r"<h\d+ .+?l\d+.+?id='[^']*'", page):
@@ -318,6 +281,7 @@ def html_builder(s, uri, outfolder="output"):
     print(uri)
     if not os.path.exists(os.path.join(outfolder, uri)):
         os.makedirs(os.path.join(outfolder, uri))
+        
     for vol in split_volumes(s):
         vol_name = re.findall("v([^p]{1,3})p\d+", vol)[-1]
         outfp = os.path.join(outfolder, uri, vol_name+".html")
