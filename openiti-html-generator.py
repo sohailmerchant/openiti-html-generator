@@ -2,9 +2,10 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
-book_url= "https://raw.githubusercontent.com/OpenITI/0450AH/master/data/0428IbnSina/0428IbnSina.Shifa/0428IbnSina.Shifa.GRAR000034-ara1.completed"
-#book_url = "https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0310Tabari/0310Tabari.MuntakhabMinDhayl/0310Tabari.MuntakhabMinDhayl.Shamela0001133-ara1.completed"
-#book_url = "https://raw.githubusercontent.com/OpenITI/0300AH/master/data/0279Baladhuri/0279Baladhuri.AnsabAshraf/0279Baladhuri.AnsabAshraf.Shamela0009773-ara1.completed"
+book_url = "https://raw.githubusercontent.com/OpenITI/"
+book_url += "0450AH/master/data/0428IbnSina/0428IbnSina.Shifa/0428IbnSina.Shifa.GRAR000034-ara1.completed"
+#book_url += "0325AH/master/data/0310Tabari/0310Tabari.MuntakhabMinDhayl/0310Tabari.MuntakhabMinDhayl.Shamela0001133-ara1.completed"
+#book_url += "0300AH/master/data/0279Baladhuri/0279Baladhuri.AnsabAshraf/0279Baladhuri.AnsabAshraf.Shamela0009773-ara1.completed"
 book_name = book_url.split(r'/')[-1]
 
 data = urllib.request.urlopen(book_url)
@@ -228,7 +229,10 @@ def convert_text(s):
 
     # page numbers:
     page_regex = r'PageV([^P]+)P(\w+)' # in some cases this is not a number
-    page_div = r"<div class='pageno-container'><a class='pageno' href='#'> Vol. \1, p. \2</a></div>"
+    page_div = r"""
+        <div class='pageno-container'>
+            <a class='pageno' href='#' id='v\1p\2'> Vol. \1, p. \2</a>
+        </div>"""
     s = re.sub(page_regex, page_div, s)
     
     s = re.sub(r"### \|([A-Z]+)\|\s+(.*?)(?=###)",
