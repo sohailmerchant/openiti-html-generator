@@ -2,9 +2,10 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
-book_url= "https://raw.githubusercontent.com/OpenITI/0450AH/master/data/0428IbnSina/0428IbnSina.Shifa/0428IbnSina.Shifa.GRAR000034-ara1.completed"
+#book_url= "https://raw.githubusercontent.com/OpenITI/0300AH/master/data/0281IbnAbiDunya/0281IbnAbiDunya.TawaducWaKhumul/0281IbnAbiDunya.TawaducWaKhumul.JK000002-ara1.mARkdown"
 #book_url = "https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0310Tabari/0310Tabari.MuntakhabMinDhayl/0310Tabari.MuntakhabMinDhayl.Shamela0001133-ara1.completed"
 #book_url = "https://raw.githubusercontent.com/OpenITI/0300AH/master/data/0279Baladhuri/0279Baladhuri.AnsabAshraf/0279Baladhuri.AnsabAshraf.Shamela0009773-ara1.completed"
+book_url = "https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0325IbnIshaqWashsha/0325IbnIshaqWashsha.Muwashsha/0325IbnIshaqWashsha.Muwashsha.Shamela0026102-ara1.completed"
 book_name = book_url.split(r'/')[-1]
 
 data = urllib.request.urlopen(book_url)
@@ -23,165 +24,28 @@ def html_open():
      
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
         <meta charset="utf-8">
-        <style>
-            .container{
-                border:0px solid #d3ded3; 
-                text-align:right;
-            }
-
-            body{
-                font-family: 'Amiri', serif!important;
-                font-size: 1.2rem;
-            }
-            html, body {
-              height: 100%;
-            }
-            .quran{
-                color:red;
-            }
-            .isnad{
-                color:yellow;
-            }
-            .EDITOR{
-                color:grey;
-            }
-            .PARATEXT{
-                color:grey;
-            }
-            .content-outer-spacing{
-                
-                margin-bottom: 30px;
-                padding-left: 50px!important;
-                padding-right: 50px!important;
-                text-align: right!important;
-                 direction:rtl;
-
-            }
-            .pageno{
-
-                font-size: 0.7rem;
-                text-decoration:none;
-            
-            }
-            .pageno-container{
-
-                text-align:center;
-            }
-            .l1{
-
-                color: #85144b;
-            }
-
-            .l2{
-
-                color: #3D9970;
-                margin-right: 10px;
-            }
-
-            .l3{
-                margin-right: 20px;
-                color: #39CCCC;
-            }
-
-
-            .toc-item {
-                white-space: normal;
-                border-bottom: 1px solid #d3d3d3;
-                text-decoration:none;
-            }
-
-            .toc{
-                text-align:left;
-                width:auto;
-
-            }
-            
-            .collapsibleList li{
-              list-style-image : url('img/button.png');
-              cursor           : auto;
-            }
-
-            li.collapsibleListOpen{
-              list-style-image : url('img/button-open.png');
-              cursor           : pointer;
-            }
-
-            li.collapsibleListClosed{
-              list-style-image : url('img/button-closed.png');
-              cursor           : pointer;
-            }
-            p{
-                text-indent: 10px;
-            }
-            .hemistich-1 {
-                padding-right: 30px;
-            }
-            .hemistich-2 {
-                padding-right: 20px;
-            }
-
-            .p-30{
-
-              padding:30px;
-            }
-            
-            #right {
-                position:fixed;
-                direction:ltr;
-                
-            }
-            .right-panel {
-                max-height: 75vh;
-                overflow:auto;
-            }
-            
-            /* width */
-            ::-webkit-scrollbar {
-              width: 10px;
-            }
-
-            /* Track */
-            ::-webkit-scrollbar-track {
-              background: #f1f1f1; 
-            }
-             
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-              background: #888; 
-            }
-
-            /* Handle on hover */
-            ::-webkit-scrollbar-thumb:hover {
-              background: #555; 
-            }
-            
-            #left {
-                margin-right:35vw;
-            }
-
-
-            .top-heading-panel{       
-
-                    direction: rtl;
-                    background-color: #fafafa;
-            }
-            #footer{
-            text-align: center;
-            direction: ltr ;
-            background-color: #fafafa;
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/style.css"  />
         <script type="text/javascript" src="js/CollapsibleLists.js"></script>
         
     </head>
     <body>
         <div class="container-fluid h-100">
+        	<!-- Navigation -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+		  <div class="navbar-header">
+			
+			<a class="navbar-brand" href="http://www.kitab-project.org" target="_blank" style="margin-top:5px">
+				<img src="http://web.kitab-project.org/wp-content/uploads/2017/07/logo-small-2.png" width="80px"/></a>
+		  </div>
+		  
+		</div>
+	  </nav>
         """
 
     return html_opening_tag
-
 
 def html_close():
     html_closing_tag = """</div></div></div></body>
@@ -191,7 +55,6 @@ def html_close():
         </script>
     </html>"""
     return html_closing_tag
-
 
 def convert_text(s):
     def format_section_title(m):
@@ -254,7 +117,7 @@ def toc_to_ul(toc):
 
     See http://code.iamkate.com/javascript/collapsible-lists/
     """
-    ul = "<ul class='collapsibleList'>\n"
+    ul = "<div style='text-align:center!important'>Book Headings</div><ul class='collapsibleList'>\n "
     level = 1
     for a in toc:
         lev = int(re.findall("l(\d+)", a)[0])
@@ -275,7 +138,6 @@ def toc_to_ul(toc):
         ul += "\n{}</ul>\n".format(" "*level*4)
     return ul
 
-
 def toc_panel(html):
     """Create the table of contents panel
 
@@ -290,7 +152,7 @@ def toc_panel(html):
     toc = toc_to_ul(toc)
     toc = """
                 <div class='col-md-4' id='right'>
-                    <div class='right-panel shadow p-3 mb-5 bg-white rounded content-outer-spacing'>
+                    <div class='right-panel shadow bg-white rounded' style='text-align: right;direction:rtl;'>
                         {}
                     </div>
                 </div>
@@ -318,25 +180,28 @@ def html_builder(s, uri):
 		    <h3>
 		        {}
 		    </h3>
+            <span></span>
 		</div>
 		<div class="col-md-12" id="meta">
-		</div/
+		</div>
 	    </div> 
-            <div class="row">
+            
     """.format(".".join(uri.split(".")[:2]))
 
 
-    left = """
+    left = """<div class="row">
                 <div class="col-md-8" id="left">
                     <div class='shadow p-3 mb-5 bg-white rounded content-outer-spacing'>
+                    
                         {}
                     </div>
                 </div>
+                
     """.format(s)
     
     footer="""
                 <div class="row" id='footer'><div class="col-md-12">
-                    This file is produced based on the data available on the KITAB/OpenITI Corpus.  The KITAB Project is funded by ERC. All right reserved as per Apache Licence... 
+                    This file is produced based on the data available on the KITAB/OpenITI Corpus.  The <a class="" href="http://www.kitab-project.org" target="_blank">KITAB Project</a> is funded by ERC. All right reserved as per Apache Licence... 
 		</div>
 	    </div>
     """
@@ -350,7 +215,6 @@ def html_builder(s, uri):
 
     return full_html
 
-
 def create_html_file(html_str):
     print("SAVING AS", book_name + ".html")
     with open(book_name + ".html", "w", encoding="utf-8") as e:
@@ -358,6 +222,15 @@ def create_html_file(html_str):
         e.write(html_str)
         #e.write(html_close())
 
+def get_text_insights(s):
+    """Get the insights about the text including counts of various tags
+
+    Args:
+        s (str): OpenITI text as string
+    """
+    q = len(re.findall(r'@QB@\s?(.*?)@QE@\s?',s,flags=re.DOTALL))
+    m = len(re.findall(r'(ms\d+)',s,flags=re.DOTALL))
+    print("No. of Quranic Reference: {} No of Milestones {}".format(q, m))
 
 # test = """\
 # ### |EDITOR|
@@ -376,6 +249,8 @@ def create_html_file(html_str):
 # print(convert_text(test))
 # input()
 
+
 s = data.read().decode('utf-8')
+get_text_insights(s)
 html_str = html_builder(s, book_name)
 create_html_file(html_str)

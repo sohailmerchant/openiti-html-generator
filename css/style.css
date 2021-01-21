@@ -1,0 +1,149 @@
+.container{
+    border:0px solid #d3ded3; 
+    text-align:right;
+}
+
+body{
+    font-family: 'Amiri', serif!important;
+    font-size: 1.2rem;
+}
+html, body {
+  height: 100%;
+}
+.quran{
+    color:red;
+}
+.isnad{
+    color:yellow;
+}
+.EDITOR{
+    color:grey;
+}
+.PARATEXT{
+    color:grey;
+}
+.content-outer-spacing{
+    
+    margin-bottom: 30px;
+    padding-left: 50px!important;
+    padding-right: 50px!important;
+    text-align: right!important;
+     direction:rtl;
+
+}
+.pageno{
+
+    font-size: 0.7rem;
+    text-decoration:none;
+
+}
+.pageno-container{
+
+    text-align:center;
+}
+.l1{
+
+    color: #85144b;
+}
+
+.l2{
+
+    color: #3D9970;
+    margin-right: 10px;
+}
+
+.l3{
+    margin-right: 20px;
+    color: #39CCCC;
+}
+
+
+.toc-item {
+    white-space: normal;
+    
+    text-decoration:none;
+    padding-right: 10px;
+}
+
+.toc{
+    text-align:left;
+    width:auto;
+
+}
+
+.collapsibleList li{
+  list-style-image : url('../img/button.png');
+  cursor           : auto;
+  border-bottom: 1px solid #d3d3d3;
+  padding: 3px;
+}
+
+li.collapsibleListOpen{
+  list-style-image : url('../img/button-open.png');
+  cursor           : pointer;
+}
+
+li.collapsibleListClosed{
+  list-style-image : url('../img/button-closed.png');
+  cursor           : pointer;
+}
+p{
+    text-indent: 10px;
+}
+.hemistich-1 {
+    padding-right: 30px;
+}
+.hemistich-2 {
+    padding-right: 20px;
+}
+
+.p-30{
+
+  padding:30px;
+}
+
+#right {
+    position:fixed;
+    direction:ltr;
+    
+}
+.right-panel {
+    max-height: 75vh;
+    overflow:auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#left {
+    margin-right:35vw;
+}
+
+
+.top-heading-panel{       
+
+        direction: rtl;
+        background-color: #fafafa;
+}
+#footer{
+text-align: center;
+direction: ltr ;
+background-color: #fafafa;
+}
