@@ -52,6 +52,7 @@ def select_files(path):
                             
                             <link rel="stylesheet" type="text/css" href="../css/style.css"  />
                             <script type="text/javascript" src="../js/CollapsibleLists.js"></script>
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css"/>
                         
                             
                         </head>
@@ -146,6 +147,28 @@ def select_files(path):
                             });
 
                             </script>
+
+                            <script type="text/javascript">
+                                document.addEventListener("DOMContentLoaded", function(event) {
+                                    import ("https://cdn.jsdelivr.net/npm/alpheios-embedded@latest/dist/alpheios-embedded.min.js").then(embedLib => {
+                                    window.AlpheiosEmbed.importDependencies({
+                                        mode: 'cdn'
+                                    }).then(Embedded => {
+                                        new Embedded({
+                                        clientId: "test.com",
+                                        enabledSelector: ".main",
+                                        disabledSelector: '.sidebar',
+                                        simpleMode: true,
+                                        textLangCode: 'ara',
+                                        }).activate();
+                                    }).catch(e => {
+                                        console.error(`Import of Alpheios embedded library dependencies failed: ${e}`)
+                                    })
+                                    }).catch(e => {
+                                    console.error(`Import of Alpheios Embedded library failed: ${e}`)
+                                    })
+                                });
+                                </script>
                         </html>"""
                         return html_closing_tag
 
@@ -249,7 +272,7 @@ def select_files(path):
                         #.format(".".join(uri.split(".")[:2]))
 
                         main = """
-                                    <div class="col-md-6" id="content">
+                                    <div class="col-md-6 alpheios-enabled main" lang="ara" id="content ">
                                     <div class="card-header sticky-top">
                                     <div class="row">
                                     
