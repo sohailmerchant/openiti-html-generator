@@ -1,7 +1,6 @@
 import os
 import urllib.request
 import json, csv
-import openiti
 
 path = r"/mnt/c/Development Work/0400AH/data/"
 

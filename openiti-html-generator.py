@@ -21,8 +21,12 @@ def select_files(path):
             #book_url = r"C:\Development Work\openiti-html-generator\README.md"
             #
             #book_name = '0977KhatibShirbini.Iqnac.Shamela0006121-ara1'
+
+            ## checking the file if it is text file... ignore anything else
+            if re.search('^\d{4}\w+\.\w+\.\w+-[a-z]{3}\d{1}(\.(mARkdown|inProgress|completed))?$',name):
                 
-            if not (name.endswith('.yml') or name.endswith('.md')):
+            #if not (name.endswith('.yml') or name.endswith('.md')):
+
                 book_name = name
                 print(book_name)
                 book_id = name.split(".")[2].split("-")[0]
@@ -37,6 +41,7 @@ def select_files(path):
                         <head>
 
                             <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
 
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             
@@ -52,11 +57,15 @@ def select_files(path):
                             
                             <link rel="stylesheet" type="text/css" href="../css/style.css"  />
                             <script type="text/javascript" src="../js/CollapsibleLists.js"></script>
-                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css"/>
+                            
                         
                             
                         </head>
                         <body>
+                       
+                        <div id="loading">
+                        <img id="loading-image" src="../img/spinner1.gif" alt="Loading..." />
+                        </div>
                             <nav class="navbar navbar-light bg-light">
                             <div class="container-fluid">
                                 <a class="navbar-brand" href="http://www.kitab-project.org" target="_blank">
@@ -82,7 +91,9 @@ def select_files(path):
                                         
                             $(document).ready(function () {
                               $(window).scroll(function () {
-                                if ($(this).scrollTop() > 50) {
+                                $('#loading').hide();
+                                $('#loading').fadeOut("slow");
+                                if ($(this).scrollTop() > 80) {
                                     $('#back-to-top').fadeIn();
                                 } else {
                                     $('#back-to-top').fadeOut();
@@ -144,31 +155,24 @@ def select_files(path):
                                     
                                     return false;
                                 });
+
+                                $(".font-increase").click(function() {
+                                        $('.main-panel').css("font-size", "1.6rem"); 
+                                });
+                                $(".font-default").click(function() {
+                                        $('.main-panel').removeAttr("style"); 
+                                });
+                                $(".bi-lightbulb-off").click(function() {
+                                        $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
+                                        $('.main-panel').toggleClass("night-mode", ""); 
+                                        console.log(this);
+                                       
+                                });
+
                             });
 
                             </script>
 
-                            <script type="text/javascript">
-                                document.addEventListener("DOMContentLoaded", function(event) {
-                                    import ("https://cdn.jsdelivr.net/npm/alpheios-embedded@latest/dist/alpheios-embedded.min.js").then(embedLib => {
-                                    window.AlpheiosEmbed.importDependencies({
-                                        mode: 'cdn'
-                                    }).then(Embedded => {
-                                        new Embedded({
-                                        clientId: "test.com",
-                                        enabledSelector: ".main",
-                                        disabledSelector: '.sidebar',
-                                        simpleMode: true,
-                                        textLangCode: 'ara',
-                                        }).activate();
-                                    }).catch(e => {
-                                        console.error(`Import of Alpheios embedded library dependencies failed: ${e}`)
-                                    })
-                                    }).catch(e => {
-                                    console.error(`Import of Alpheios Embedded library failed: ${e}`)
-                                    })
-                                });
-                                </script>
                         </html>"""
                         return html_closing_tag
 
@@ -194,7 +198,7 @@ def select_files(path):
 
                         See http://code.iamkate.com/javascript/collapsible-lists/
                         """
-                        ul = "<div class='card-header'>عنوان الفصل</div><ul class='collapsibleList'>\n "
+                        ul = "<div class='card-header title-heading sticky-top'>عنوان الفصل</div><ul class='collapsibleList'>\n "
                         level = 1
                         for a in toc:
                             lev = int(re.findall("l(\d+)", a)[0])
@@ -227,8 +231,8 @@ def select_files(path):
                                         <a class='toc-item l{0}' href='#{1}'>{1}</a>"""
                             toc.append(tag.format(level, title))
                         toc = toc_to_ul(toc)
-                        toc = """<div class="row " id="row-main">
-                                    <div class='col-md-3 sidebar' id='sidebar-right'>
+                        toc = """<div class='container'><div class="row " id="row-main">
+                                    <div class='col col-lg-3 sidebar' id='sidebar-right'>
                                         <div class='right-panel shadow bg-white rounded sticky-top'>
                                             {}
                                         </div>
@@ -237,7 +241,7 @@ def select_files(path):
 
                         return toc
 
-                    def html_builder(s, uri,bi, book_id):
+                    def html_builder(s, uri,bi, meta):
                         book_details = get_book_metadata(book_id)
                         
                         """Build the body of the html file
@@ -258,8 +262,10 @@ def select_files(path):
                                 <div class="row top-heading-panel content-outer-spacing">
                                 <div class="col-md-12 h-100">
                                 <h4>
-                                    {}
+                                {}
+            
                                 </h4>
+                                
                                 </div>
                                 </div>
                             </div>
@@ -268,50 +274,65 @@ def select_files(path):
                             </div> 
                                 
                         """.format(book_details['title_lat'] + " by " + book_details['author_lat'])
+                        
                        
                         #.format(".".join(uri.split(".")[:2]))
 
                         main = """
-                                    <div class="col-md-6 alpheios-enabled main" lang="ara" id="content ">
+                                    <div class="col-md-6" lang="ara" id="content">
                                     <div class="card-header sticky-top">
                                     <div class="row">
                                     
-                                     <div class="col-md-3">
-                                        <i class="bi bi-arrows-angle-expand toggle-sidebar-left toggle-sidebar-right">
+                                     <div class="col-md-4 col-2">
+                                        <i class="bi bi-arrows-angle-expand toggle-sidebar-right toggle-sidebar-left ">
                                         </i>
                                         </div>
-                                        <div class="col-md-9" style='text-align:left'>
+                                        <div class="col-md-4 col-8 title-heading">
+                                        {book_details}
+                                        </div>
+                                        <div class="col-md-4 col-2" style='text-align:left'>
+                                       
                                         <i id="back-to-top" class="bi bi-arrow-bar-up">
                                         </i>
+                                        <i class="bi bi-fonts font-increase"></i>
+                                        <i class="bi bi-fonts font-default"></i>
+                                        <i class="bi bi-lightbulb-off"></i>
+                                                                               
                                         </div>
+                                       
                                         
                                     
                                     </div>
                                     </div>
-                                        <div class='shadow p-3 mb-5 bg-white rounded'>
-                                        
-                                            {}
+                                        <div class='main-panel shadow p-5 mb-5'>
+                                        <div class='row'>
+                                        <div class='col'>
 
+                                            {}
                                         </div>
+                                        
+                                     
+                                        </div></div>
                                 </div>
                                     
-                        """.format(s)
+                        """.format(s, book_details=book_details['title_lat'])
 
                         left = """
                         
-                        <div class='col-md-3 sidebar' id='sidebar-left'> 
-                        <div class='left-panel shadow bg-white rounded sticky-top'>
-                        <div class='card-header'>
+                        <div class='col col-lg-3 sidebar rounded' id='sidebar-left'> 
+                        <div class='left-panel shadow sticky-top'>
+                        <div class='card-header title-heading sticky-top'>
                                         رؤى الكتاب
                                         </div>
                                         <div class="card-body">
     
 
                                         {}
+                                        {}
                                           </div>
                                         </div>
-                                        </div>
-                        </div>""".format(bi + "<p>" 'Word Count: '+ book_details['tok_length'].strip() + "</p>")
+                                        </div></div>
+                        </div>""".format(bi, meta)
                         
                         footer="""
                                     <div class="row" id='footer'><div class="col-md-12">
@@ -346,8 +367,28 @@ def select_files(path):
                         q = len(re.findall(r'@QB@\s?(.*?)@QE@\s?',s,flags=re.DOTALL))
                         m = len(re.findall(r'(ms\d+)',s,flags=re.DOTALL))
                         #print("No. of Quranic Reference: {} No of Milestones {}".format(q, m))
-                        return "<p>Quranic Reference: {}</p> <p>Milestones: {} </p>".format(q, m)
+                        return "<p class='text-muted'>Quranic Reference: {}</p> <p class='text-muted'>Milestones: {} </p>".format(q, m)
 
+                    def get_metadata_by_id(book_id):
+                        """Get the metadata for the book by book id
+
+                        Args:
+                            book_id (str): Book Id  as string
+                        """
+                        book_details = get_book_metadata(book_id)
+                        #title = book_details['title_lat']
+                        title_ar = book_details['title_ar']
+                        author_date = book_details['date']
+                        author_ar = book_details['author_ar']
+                        author_eng = book_details['author_lat']
+                        #print(title)
+
+                        return """<div>
+                                <p class='text-muted'>Book Title: {}</p>
+                                <p class='text-muted'>Author: {}</p>
+                                <p class='text-muted'>Author Date: {}</p>
+                        </div>""".format(title_ar, author_ar, author_date)
+                   
                    
                     # test = """\
                     # ### |EDITOR|
@@ -371,7 +412,8 @@ def select_files(path):
                     
                 s = data
                 bi = get_text_insights(s)
-                html_str = html_builder(s, book_name, bi, book_id)
+                meta = get_metadata_by_id(book_id)
+                html_str = html_builder(s, book_name, bi, meta)
                 create_html_file(html_str)
 
 select_files(path)
