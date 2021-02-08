@@ -1,3 +1,9 @@
+"""Create html versions of all OpenITI text files in a folder (and its subfolders).
+
+Main function:
+convert_all_files_in_folder(folder, meta_fp='metadata.csv', template_path="template/main.html")
+"""
+
 import urllib.request
 import re
 import os
@@ -7,11 +13,6 @@ from openiti.helper.funcs import get_all_text_files_in_folder
 import config
 import utility
 
-
-
-#path = r"/mnt/c/Development Work/0400AH/data/"
-path = r"/mnt/c/Development Work/0400AH/data/test/"
-path = "test"
 
 def convert_text(s):
     """Convert an OpenITI text to html \
@@ -134,27 +135,14 @@ def get_metadata_by_id(book_id, meta_fp):
     return book_details   
 
 
-def convert_all_files_in_folder(folder, meta_fp='metadata.csv', template_path="template/main.html"):
+def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
+                                template_path="template/main.html", outfolder="."):
     """Convert all text files in the folder (and its subfolders) into html.
 
     Args:
         folder (str): path to folder containing the (subfolders with) text files
         meta_fp (str): path to the file containing the metadata
     """
-
-##    for root, dirs, files in os.walk(path):
-##        print(root)
-##     
-##        for name in files:
-##            
-##            if re.search('^\d{4}\w+\.\w+\.\w+-[a-z]{3}\d{1}(\.(mARkdown|inProgress|completed))?$',name):
-##            
-##                version_uri = name
-##                print(version_uri)
-##                book_id = name.split(".")[2].split("-")[0]
-##                print(book_id)
-##                with open(root+'/'+name,encoding='utf-8') as f:
-##                    data = f.read()
     for fp in get_all_text_files_in_folder(folder):
         version_uri = re.split(r"[/\\]", fp)[-1]
         print(version_uri)
@@ -166,8 +154,16 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv', template_path="t
         # get the metadata of the book by id
         meta = get_metadata_by_id(book_id, meta_fp)
 
+        # convert to html and save file
         html_str = html_builder(s, meta, template_path=template_path)
-        create_html_file(html_str, version_uri+".html")
+        outfp = os.path.join(outfolder, version_uri+".html")
+        create_html_file(html_str, outfp)
 
 if __name__ == "__main__":
-    convert_all_files_in_folder(path)
+    #path = r"/mnt/c/Development Work/0400AH/data/"
+    #path = r"/mnt/c/Development Work/0400AH/data/test/"
+    path = "test"
+    meta_fp='metadata.csv'
+    template_path="template/main.html"
+    outfolder = "."
+    convert_all_files_in_folder(path, meta_fp, template_path, outfolder)
