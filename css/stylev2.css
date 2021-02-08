@@ -1,6 +1,7 @@
 body{
     font-family: 'Amiri', serif!important;
     font-size: 1.2rem;
+    overflow: auto;
 }
 html, body {
   height: 100%;
@@ -17,6 +18,13 @@ html, body {
 .PARATEXT{
     color:grey;
 }
+
+.book-body {
+    height: 100%;
+    direction: rtl;
+    overflow-y: scroll;
+}
+
 
 .pageno{
 
@@ -67,7 +75,7 @@ html, body {
     overflow-y: auto;
     margin-right: -300px;
     width: 0;
-    height: 100%;
+    height: 90%;
 
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -89,6 +97,7 @@ html, body {
     margin-left: -300px;
 }
 
+
 /* Sidebar Styles */
 
 .sidebar-nav {
@@ -102,14 +111,18 @@ html, body {
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    text-indent: 0px;
     line-height: 40px;
+    padding-left: 0px;
 }
 
 .sidebar-nav li a {
     display: block;
     color: #999999;
     text-decoration: none;
+    margin-right: 0px;
+    padding-right: 0px;
+    text-indent: 0px;
 }
 
 .sidebar-nav li a:hover {
@@ -226,6 +239,24 @@ html, body {
     display: none;
   }
 
+/* Main Level */
+ul{
+  margin-left:0px;
+  padding-left: 0px;
+}
+
+/* Second Level */
+ul ul{
+  margin-left:1px;
+  padding-left: 0px;
+}
+
+/* Third Level */
+ul ul ul{
+  margin-left:2px;
+  padding-left: 0px;
+}
+
 .collapsibleList li{
   list-style-image : url('../img/button.png');
   cursor           : auto;
@@ -251,19 +282,21 @@ p{
 .hemistich-2 {
     padding-right: 20px;
 }
-  #book-main{
+
+#book-main{
 
     padding-right: var(--bs-gutter-x,.75rem);
     padding-left: var(--bs-gutter-x,.75rem);
     z-index: 5;
     text-align: justify;
-  }
+}
 
-  #footer{
+#footer{
     text-align: center;
     direction: ltr ;
+    font-size: 12px;
 
-    }
+}
 
 
 .navbar-light{
