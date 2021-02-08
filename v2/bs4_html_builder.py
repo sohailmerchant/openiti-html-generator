@@ -2,17 +2,16 @@ import urllib.request
 import re
 import os
 from bs4 import BeautifulSoup
-# load repl list and replace functions from config.py: 
-from config import *
-from utility import get_book_metadata, get_book_files
-
 from openiti.helper.funcs import get_all_text_files_in_folder
+
+import config
+import utility
+
 
 
 #path = r"/mnt/c/Development Work/0400AH/data/"
 path = r"/mnt/c/Development Work/0400AH/data/test/"
 path = "test"
-book_id = ''
 
 def convert_text(s):
     """Convert an OpenITI text to html \
@@ -24,7 +23,7 @@ def convert_text(s):
     Returns:
         s (str): text with html markup
     """
-    for d in repl: # loaded from config.py
+    for d in config.repl: # loaded from config.py
         if "flags" in d:
             s = re.sub(d["ptrn"], d["repl"], s, flags=d["flags"])
         else:
@@ -104,8 +103,6 @@ def html_builder(s, meta, template_path):
         
         soup.new_tag("div", right_div.append(BeautifulSoup(right, 'lxml')))
         soup.new_tag("div", book_main.insert(1, BeautifulSoup(s, 'html.parser')))
-
-        
        
     # format main text as html:
     
@@ -125,8 +122,8 @@ def get_metadata_by_id(book_id, meta_fp):
     Args:
         book_id (str): Book Id  as string
     """
-    book_details = get_book_metadata(book_id, meta_fp)
-    print(book_details)
+    book_details = utility.get_book_metadata(book_id, meta_fp)
+    #print(book_details)
     title = book_details['title_lat']
     title_ar = book_details['title_ar']
     author_date = book_details['date']
@@ -172,5 +169,5 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv', template_path="t
         html_str = html_builder(s, meta, template_path=template_path)
         create_html_file(html_str, version_uri+".html")
 
-
-convert_all_files_in_folder(path)
+if __name__ == "__main__":
+    convert_all_files_in_folder(path)
