@@ -14,14 +14,13 @@ def get_book_files(path):
 
 #get_book_files(path)
 
-def get_book_metadata(book_id):
+def get_book_metadata(book_id, meta_fp='metadata.csv'):
     """Get metadata of the book by book Id
 
     Args:
     s (str): Book Id e.g. 'JK000001'
     """
-    file = 'metadata.csv'
-    with open(file, encoding='utf-8') as f:
+    with open(meta_fp, encoding='utf-8') as f:
         rd = csv.DictReader(f,delimiter="\t")
         for dct in map(dict, rd):
             if book_id == dct['id']:
