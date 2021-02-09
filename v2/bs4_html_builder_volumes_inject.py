@@ -83,9 +83,9 @@ def toc_tags(s, vol_no):
     """
     toc = []
 ##    tag = """
-##                    <a class='toc-item l{0}' href='{1}.html#head{2}'>{3}</a>"""
+##                    <a class='toc-item l{0}' href='{1}.html#head{2}' onclick='goTo(); return False'>{3}</a>"""
     tag = """
-                    <a class='toc-item l{0}' href='{1}.html#head{2}' onclick='goTo()'; return False>{3}</a>"""
+                    <a class='toc-item l{0}' href='{1}.html#head{2}'>{3}</a>"""
 
     
     for i, r in enumerate(re.findall("### (\|+) (.*)", s)):
@@ -168,13 +168,17 @@ def html_builder(s, meta, toc, template_path):
 ##        soup.new_tag("div", book_main.insert(1, BeautifulSoup(s, 'html.parser')))
 ##       
 ##    # format main text as html:
-    
-    full_html = soup
-    return str(full_html)
+##    
+##    full_html = soup
+##    return str(full_html)
+    return s
 
 def build_index_html(meta, toc, template_path, first_vol="01"):
     with open(template_path, 'r') as html:
         contents = html.read()
+    if first_vol != "01":
+        v = 'var thisVolume = "{}"'
+        contents = re.sub(v.format("01"), v.format(first_vol), contents)
 
     soup = BeautifulSoup(contents, 'lxml')
     
@@ -234,9 +238,19 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
                                 template_path="template/main.html", outfolder="."):
     """Convert all text files in the folder (and its subfolders) into html.
 
+    For each text file, a folder is creted that contains
+    - an index.html file that contains
+      the navbar, table of contents and footer,
+      and javascript that inserts the content of a volume into this structure.
+    - For each volume of the text, a separate json file
+      that contains the html-formatted text of the volume,
+      in addition to a list of the page numbers in that volume. 
+
     Args:
         folder (str): path to folder containing the (subfolders with) text files
         meta_fp (str): path to the file containing the metadata
+        template_path (str): path to the file that contains the html template
+        outfolder (str): path to the 
     """
     # copy css, js and img folders into outfolder:
     copy_infrastructure(outfolder)
@@ -258,7 +272,7 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
 
         # build the table of contents:
         toc = []
-        for vol_no, s in vols:
+        for vol_no, s, pages in vols:
             toc += toc_tags(s, vol_no)
         toc = toc_to_ul(toc)
 
@@ -266,6 +280,12 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
         if not os.path.exists(os.path.join(outfolder, version_uri)):
             os.makedirs(os.path.join(outfolder, version_uri))
 
+        # create index.html file:
+        first_vol = vols[0][0]
+        print("first_vol:", first_vol)
+        index_html = build_index_html(meta, toc, template_path, first_vol)
+        outfp = os.path.join(outfolder, version_uri, "index.html")
+        create_html_file(index_html, outfp)
         
         # save the volume files:
         for vol_no, s, pages in vols:
@@ -293,6 +313,6 @@ if __name__ == "__main__":
     #path = r"/mnt/c/Development Work/0400AH/data/test/"
     path = "test"
     meta_fp='metadata.csv'
-    template_path="template/main.html"
+    template_path="template/main_volumes.html"
     outfolder = "output2"
     convert_all_files_in_folder(path, meta_fp, template_path, outfolder)
