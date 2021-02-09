@@ -1,0 +1,221 @@
+<html dir="rtl" lang="ar">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+    <link rel="stylesheet" type="text/css" href="../css/stylev2.css" />
+    <script type="text/javascript" src="../js/CollapsibleLists.js"></script>
+    <!-- <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css" /> -->
+
+
+    <script type="text/javascript">
+
+    </script>
+
+</head>
+
+<body>
+    <div id="loading">
+        <img id="loading-image" src="../img/spinner1.gif" alt="Loading..." />
+    </div>
+
+    <div class='page-wrapper toggled' id='wrapper'>
+
+        <div id="sidebar-wrapper">
+
+        </div>
+
+
+        <div class="book container body-inner" lang="ara"></div>
+
+        <nav class="navbar navbar-light shadow sticky-top">
+            <div class="container-fluid">
+                <div class='row'>
+                    <div class='col-12'>
+                        <div class="btn">
+                            <a class='nav-link pull-right' title="Go to top">
+                                <i id="back-to-top" class="bi bi-arrow-bar-up">
+                                </i> 
+                            </a>
+                          
+                            <a class='nav-link pull-right' title="Increase fonts">
+                                <i class="btn bi bi-fonts font-default pull-left"></i>
+                            </a>
+                            <a class='nav-link pull-right' title="Turn light off">
+                                <i class="btn bi bi-lightbulb-off"></i></a>
+
+
+
+
+                            <div class="nav-link pull-right dropdown">
+                                <a class='' id="dropdownMenuButton" data-bs-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="false" title="Book Metadata">
+                                    <i class="btn bi bi-info  "></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="col-12" id="metadata-content">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class='nav-link pull-right' href="#menu-toggle" id="menu-toggle" title="Book Chapters">
+                                <i class="btn bi bi-list"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pull-left">
+
+
+                    <a class="navbar-brand mx-auto" href="http://www.kitab-project.org" target="_blank">
+                        <img src="../img/kitab-logo.png" width="60px" />
+                    </a>
+
+
+
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+
+
+
+        <div class="book-body container fixed">
+
+            <div class='row'>
+                <div class='col-12'>
+                    <div class="row top-heading-panel content-outer-spacing">
+
+                    </div>
+                </div>
+                <div class="col-12" id="meta">
+                </div>
+            </div>
+            <div class="row justify-content-md-center" id="book-main">
+
+
+
+                <div class="col-lg-8 col-sm-12" id="content">
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <div class="row mt-5" id='footer'>
+        <div class="col-md-12">
+            The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan University, London, and has received funding from the European Research Council (ERC) under the European Union&apos;s
+            Horizon 2020 research and innovation programme (Grant agreement No. 772989)
+            
+        </div>
+        <div class="col-md-12">
+            <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50"/>
+        </div>
+    </div>
+
+    </div>
+
+</body>
+<script>
+
+    var thisVolume = "01";
+    CollapsibleLists.apply();
+    console.log("Applied");
+    $(document).ready(function () {
+        $('#loading').hide();
+        $('#loading').fadeOut("slow");
+        
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 80) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+
+    });
+
+
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    $(".font-default").click(function () {
+
+        $('#wrapper').toggleClass("font-increase", "font-default");
+    });
+
+    $(".bi-lightbulb-off").click(function () {
+        $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
+        $('.page-wrapper').toggleClass("night-mode", "");
+        $('.navbar-light').toggleClass("night-mode", "");
+        console.log(this);
+
+    });
+    $('.toc-item').on('click', event => {
+        console.log('toc item clicked');
+        event.preventDefault();
+        var clickedElement = event.target;
+        var href = clickedElement.data('href');
+        console.log('href: '+href);
+        var vol = href.substring(0,2);
+        var head = href.split('head').pop();
+        $.getJSON(vol+".json", function(json){
+            if (vol != window.thisVolume) {
+                $('#content').empty().append(json["content"]);
+                window.thisVolume = vol;
+            }
+            document.getElementById('#head'+head).scrollIntoView();
+        } );
+        return false; 
+    } );
+    
+</script>
+
+
+</html>
