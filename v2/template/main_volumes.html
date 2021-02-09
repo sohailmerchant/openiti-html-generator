@@ -50,6 +50,15 @@
         <nav class="navbar navbar-light shadow sticky-top">
             <div class="container-fluid">
                 <div class='row'>
+                    <div>
+                        <form id="nav-form">
+                          <span>ج:</span>
+                          <select id="vol-select"></select>
+                          <span>ص:</span>
+                          <select id="page-select"></select>
+                          <input type="submit" value="Go"/>
+                        </form>
+                    </div>
                     <div class='col-12'>
                         <div class="btn">
                             <a class='nav-link pull-right' title="Go to top">
@@ -155,6 +164,7 @@
 <script>
 
     var thisVolume = "01";
+    var volPages = "volPages"; /*loaded by html_builder*/
     console.log("Load initial volume "+thisVolume);
 
     CollapsibleLists.apply();
@@ -212,6 +222,25 @@
         } );
     });
 
+    function loadPageNumbers(vol) {
+      var pageSel = document.getElementById("page-select");
+      pageSel.innerHTML = '';
+      volPages[vol].forEach(function(p, index) {
+        pageSel.options[pageSel.options.length] = new Option(p, p);
+      });
+    }
+
+    function loadVolumeNumbers(vol) {
+      var volSel = document.getElementById("vol-select");
+      volSel.innerHTML = '';
+      /*console.log(Object.keys(volPages));*/
+      /*console.log(Object.keys(volPages).sort());*/
+      Object.keys(volPages).sort().forEach(function(v, index) {
+        /*console.log(v);*/
+        volSel.options[volSel.options.length] = new Option(v, v);
+      });
+      volSel.value = vol;
+    }
 
     async function loadVolume(vol, forceLoad) {
       /*Load volume json if it is not already loaded*/
@@ -223,8 +252,13 @@
               window.thisVolume = vol;
               /*$('#loading').hide();
               $('#loading').fadeOut("slow");*/
+              /*Load volume and page numbers in page-nav form:*/
+              loadVolumeNumbers(vol);
+              loadPageNumbers(vol);
               return true;
           } );
+
+
       }
       return true;
     }
@@ -235,8 +269,29 @@
         targetAnchor.scrollIntoView();
       });
     }
-
-
+    function padWithZeros(number, width) {
+      number = number + "";
+      if (number.length >= width) {
+        return number;
+      } else {
+        return new Array(width - number.length +1).join("0") + number;
+      }
+    }
+    document.getElementById("nav-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var vol = document.getElementById("vol-select").value;
+      var page = parseInt(document.getElementById("page-select").value, 10);
+      if (page >= 1) {
+        page = page-1 /*page number is at bottom of page*/
+      }
+      var anchor = "v"+vol+"p"+padWithZeros(page, 3);
+      goToAnchor(vol, anchor);
+    });
+    /*Adapt the page numbers when the volume number changes:*/
+    document.getElementById("vol-select").addEventListener("change", function(event) {
+      var vol = this.value;
+      loadPageNumbers(vol);
+    });
 
 
 </script>
