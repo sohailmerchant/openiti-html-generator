@@ -46,7 +46,7 @@ def toc_to_ul(toc):
 
     See http://code.iamkate.com/javascript/collapsible-lists/
     """
-    ul = "<div class='card-header title-heading'>عنوان الفصل</div><ul class='collapsibleList'>\n "
+    ul = "<div class='card-header title-heading'>فصول الكتاب</div><ul class='collapsibleList'>\n "
     level = 1
     for a in toc:
         lev = int(re.findall("l(\d+)", a)[0])
@@ -173,12 +173,19 @@ def html_builder(s, meta, toc, template_path):
 ##    return str(full_html)
     return s
 
-def build_index_html(meta, toc, template_path, first_vol="01"):
-    with open(template_path, 'r') as html:
+def build_index_html(meta, toc, template_path, vols):
+    with open(template_path, mode='r', encoding="utf-8") as html:
         contents = html.read()
+
+    # set thisVolume variable so that js loads first volume initially:
+    first_vol = vols[0][0]
     if first_vol != "01":
         v = 'var thisVolume = "{}"'
         contents = re.sub(v.format("01"), v.format(first_vol), contents)
+
+    # provide js with a dictionary with list of page numbers in every volume:
+    pages = json.dumps({v[0]: v[2] for v in vols})  # {vol_no: list_of_pages}
+    contents = re.sub('"volPages"', pages, contents)
 
     soup = BeautifulSoup(contents, 'lxml')
     
@@ -202,9 +209,9 @@ def build_index_html(meta, toc, template_path, first_vol="01"):
     return str(full_html)
    
 
-def create_json_file(html_str, pages, outfp):
+def create_json_file(html_str, pages, vols, outfp):
     print("SAVING AS", outfp)
-    d = {"content": html_str, "pages": pages}
+    d = {"content": html_str, "pages": pages, "volumes": [v[0] for v in vols]}
     with open(outfp, "w", encoding="utf-8") as f:
         json.dump(d, f, ensure_ascii=False, indent=2)
 
@@ -281,9 +288,7 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
             os.makedirs(os.path.join(outfolder, version_uri))
 
         # create index.html file:
-        first_vol = vols[0][0]
-        print("first_vol:", first_vol)
-        index_html = build_index_html(meta, toc, template_path, first_vol)
+        index_html = build_index_html(meta, toc, template_path, vols)
         outfp = os.path.join(outfolder, version_uri, "index.html")
         create_html_file(index_html, outfp)
         
@@ -293,7 +298,7 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
             html_str = html_builder(s, meta, toc, template_path=template_path)
             
             outfp = os.path.join(outfolder, version_uri, vol_no+".json")
-            create_json_file(html_str, pages, outfp)
+            create_json_file(html_str, pages, vols, outfp)
 
 
 def copy_infrastructure(outfolder, infra_folders=["css", "js", "img"]):
