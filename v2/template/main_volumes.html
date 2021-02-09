@@ -152,16 +152,20 @@
 
     </div>
 
-</body>
 <script>
 
     var thisVolume = "01";
+    console.log("Load initial volume "+thisVolume);
+
     CollapsibleLists.apply();
-    console.log("Applied");
+    console.log("Applied CollapsibleLists");
+
     $(document).ready(function () {
-        $('#loading').hide();
-        $('#loading').fadeOut("slow");
-        
+        loadVolume(thisVolume, true).then(res => {
+          console.log("Initial volume loaded");
+          $('#loading').hide();
+          $('#loading').fadeOut("slow");
+        });
         $(window).scroll(function () {
             if ($(this).scrollTop() > 80) {
                 $('#back-to-top').fadeIn();
@@ -176,46 +180,68 @@
             }, 400);
             return false;
         });
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
 
-    });
+        $(".font-default").click(function () {
 
+            $('#wrapper').toggleClass("font-increase", "font-default");
+        });
 
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+        $(".bi-lightbulb-off").click(function () {
+            $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
+            $('.page-wrapper').toggleClass("night-mode", "");
+            $('.navbar-light').toggleClass("night-mode", "");
+            console.log(this);
 
-    $(".font-default").click(function () {
-
-        $('#wrapper').toggleClass("font-increase", "font-default");
-    });
-
-    $(".bi-lightbulb-off").click(function () {
-        $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
-        $('.page-wrapper').toggleClass("night-mode", "");
-        $('.navbar-light').toggleClass("night-mode", "");
-        console.log(this);
-
-    });
-    $('.toc-item').on('click', event => {
-        console.log('toc item clicked');
-        event.preventDefault();
-        var clickedElement = event.target;
-        var href = clickedElement.data('href');
-        console.log('href: '+href);
-        var vol = href.substring(0,2);
-        var head = href.split('head').pop();
-        $.getJSON(vol+".json", function(json){
-            if (vol != window.thisVolume) {
-                $('#content').empty().append(json["content"]);
-                window.thisVolume = vol;
-            }
-            document.getElementById('#head'+head).scrollIntoView();
+        });
+        $('.toc-item').click(function(event) {
+            /*console.log('toc item clicked');*/
+            event.preventDefault();
+            var clickedElement = event.target;
+            /*console.log(clickedElement);*/
+            var href = clickedElement.getAttribute("href");
+            /*console.log('href: '+href);*/
+            var vol = href.substring(0,2);
+            var head = href.split('head').pop();
+            var anchorId = "head"+head;
+            goToAnchor(vol, anchorId);
+            return false;
         } );
-        return false; 
-    } );
-    
+    });
+
+
+    async function loadVolume(vol, forceLoad) {
+      /*Load volume json if it is not already loaded*/
+      if (vol != window.thisVolume || forceLoad) {
+          await $.getJSON(vol+".json", function(json){
+              /*$('#loading').show();*/
+              $('#content').empty().append(json["content"]);
+              /*console.log("json loaded");*/
+              window.thisVolume = vol;
+              /*$('#loading').hide();
+              $('#loading').fadeOut("slow");*/
+              return true;
+          } );
+      }
+      return true;
+    }
+
+    function goToAnchor(vol, anchorId) {
+      loadVolume(vol, false).then(res => {
+        var targetAnchor = document.getElementById(anchorId);
+        targetAnchor.scrollIntoView();
+      });
+    }
+
+
+
+
 </script>
+</body>
+
 
 
 </html>
