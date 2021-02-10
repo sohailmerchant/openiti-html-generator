@@ -261,12 +261,17 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
     """
     # copy css, js and img folders into outfolder:
     copy_infrastructure(outfolder)
-    folders = []
+
+    # create index.md file that will contain the links to all texts:
+    outfp = os.path.join(outfolder, "index.md")
+    with open(outfp, mode="w", encoding="utf-8") as file:
+        file.write("")
+
+
     for fp in get_all_text_files_in_folder(folder):
         version_uri = re.split(r"[/\\]", fp)[-1]
         print(version_uri)
         version_uri = ".".join(version_uri.split(".")[:3]) # split off extension
-        folders.append(version_uri)
         book_id = version_uri.split(".")[2].split("-")[0]
         #print(book_id)
         with open(fp, encoding='utf-8') as f:
