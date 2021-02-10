@@ -304,7 +304,7 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
         # add fp to index.md file:
         outfp = os.path.join(outfolder, "index.md")
         with open(outfp, mode="a", encoding="utf-8") as file:
-            file.write("[{0}]({0})\n".format(version_uri))
+            file.write("[{0}]({0})\n\n".format(version_uri))
 
 
 def copy_infrastructure(outfolder, infra_folders=["css", "js", "img"]):
