@@ -1,0 +1,360 @@
+<html dir="rtl" lang="ar">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+    <link rel="stylesheet" type="text/css" href="../css/stylev2.css" />
+    <script type="text/javascript" src="../js/CollapsibleLists.js"></script>
+    <!-- <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css" /> -->
+
+
+    <script type="text/javascript">
+
+    </script>
+
+</head>
+
+<body>
+    <div id="loading">
+        <img id="loading-image" src="../img/spinner1.gif" alt="Loading..." />
+    </div>
+
+    <div class='page-wrapper toggled' id='wrapper'>
+
+        <div id="sidebar-wrapper">
+
+        </div>
+
+
+        <div class="book container body-inner" lang="ara"></div>
+
+        <nav class="navbar navbar-light shadow sticky-top">
+            <div class="container-fluid">
+                <div class='row'>
+                    <div class='col-12'>
+                        <div class="btn">
+                            <a class='nav-link pull-right' title="Go to top">
+                                <i id="back-to-top" class="bi bi-arrow-bar-up"></i> 
+                            </a>
+                          
+                            <a class='nav-link pull-right' title="Increase fonts">
+                                <i class="btn bi bi-fonts font-default pull-left"></i>
+                            </a>
+
+                            <a class='nav-link pull-right' title="Turn light off">
+                                <i class="btn bi bi-lightbulb-off"></i>
+                            </a>
+
+                            <div class="nav-link pull-right dropdown">
+                                <a class='' id="dropdownMenuButton" data-bs-toggle="dropdown" role="button"
+                                    aria-haspopup="true" aria-expanded="false" title="Book Metadata">
+                                    <i class="btn bi bi-info  "></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="col-12" id="metadata-content">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class='nav-link pull-right' href="#menu-toggle" id="menu-toggle" title="Book Chapters">
+                                <i class="btn bi bi-list"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-left" id="nav-div">
+                    <form id="nav-form">
+                      <span>ج:</span>
+                      <select id="vol-select"></select>
+                      <span>ص:</span>
+                      <select id="page-select"></select>
+                      <input type="submit" value="Go" id="nav-submit-btn"/>
+                    </form>
+                </div>
+                <div class="pull-left">
+                    <a class="navbar-brand mx-auto" href="http://www.kitab-project.org" target="_blank">
+                        <img src="../img/kitab-logo.png" width="60px" />
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="book-body container fixed">
+            <div class='row'>
+                <div class='col-12'>
+                    <div class="row top-heading-panel content-outer-spacing">
+                    </div>
+                </div>
+                <div class="col-12" id="meta">
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center" id="book-main">
+                <div class="col-lg-8 col-sm-12" id="content">
+
+                </div>
+            </div>
+
+            <div class="row mt-5" id='footer'>
+                <div class="col-md-12">
+                    The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan University, London, and has received funding from the European Research Council (ERC) under the European Union&apos;s
+            Horizon 2020 research and innovation programme (Grant agreement No. 772989)
+            
+                </div>
+                <div class="col-md-12">
+                    <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50"/>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<script>
+    var pageSel = document.getElementById("page-select");
+    var volSel = document.getElementById("vol-select");
+    var thisVolume = "01";
+    var volPages = "volPages"; /*loaded by html_builder*/
+
+    CollapsibleLists.apply();
+    console.log("Applied CollapsibleLists");
+
+    $(document).ready(function () {
+        console.log("Load initial volume "+thisVolume);
+        loadVolume(thisVolume).then(res => {
+          console.log("Initial volume loaded");
+          $('#loading').hide();
+          $('#loading').fadeOut("slow");
+        });
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 80) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(".font-default").click(function () {
+
+            $('#wrapper').toggleClass("font-increase", "font-default");
+        });
+
+        $(".bi-lightbulb-off").click(function () {
+            $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
+            $('.page-wrapper').toggleClass("night-mode", "");
+            $('.navbar-light').toggleClass("night-mode", "");
+            console.log(this);
+
+        });
+        $('.toc-item').click(function(event) {
+            /*console.log('toc item clicked');*/
+            event.preventDefault();
+            var clickedElement = event.target;
+            /*console.log(clickedElement);*/
+            var href = clickedElement.getAttribute("href");
+            /*console.log('href: '+href);*/
+            var vol = href.substring(0,2);
+            var head = href.split('head').pop();
+            var anchorId = "head"+head;
+            goToAnchor(vol, anchorId);
+            return false;
+        } );
+    });
+
+    function loadPageNumbers(vol, page) {
+      /*var pageSel = document.getElementById("page-select");*/
+      pageSel.innerHTML = '';
+      volPages[vol].forEach(function(p, index) {
+        pageSel.options[pageSel.options.length] = new Option(p, p);
+      });
+      if (page) {
+        pageSel.value=page;
+      }
+    }
+
+    function loadVolumeNumbers(vol) {
+      /*var volSel = document.getElementById("vol-select");*/
+      volSel.innerHTML = '';
+      /*console.log(Object.keys(volPages));*/
+      /*console.log(Object.keys(volPages).sort());*/
+
+      Object.keys(volPages).sort().forEach(function(v, index) {
+        /*console.log(v);*/
+        volSel.options[volSel.options.length] = new Option(v, v);
+      });
+      volSel.value = vol;
+    }
+
+    async function loadVolume(vol) {
+      /*Load volume json */
+      var page = pageSel.value;
+      console.log("loading volume "+vol);
+      await $.getJSON(vol+".json", function(json){
+        $('#loading').style.display = "block";
+        $('#content').empty().append(json["content"]);
+        /*console.log("json loaded");*/
+        window.thisVolume = vol;
+        $('#loading').hide();
+        $('#loading').fadeOut("slow");
+        /*Load volume and page numbers in page-nav form:*/
+        loadVolumeNumbers(vol);
+        loadPageNumbers(vol, page);
+        return true;
+      } );
+    }
+
+    function goToAnchor(vol, anchorId) {
+      if (vol != window.thisVolume) {
+        loadVolume(vol, false).then(res => {
+          console.log("Volume loaded");
+          console.log("Go to anchor "+anchorId);
+          /*move the volume page to the element with id=anchorId*/
+          /*var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
+          console.log(targetAnchor);*/
+          /*window.location.hash = "";
+          window.location.hash = anchorId;
+          window.location.hash = anchorId;
+          console.log("#"+anchorId);*/
+          /*//This approach does not work at all: scrolls only main window.
+          var targetAnchor = $("#"+anchorId);
+          //$("#content").animate(
+          $("html, body").animate(
+            {scrollTop: targetAnchor.offset().top},
+            1000
+          );*/
+          /*//This approach does not work at all: scrolls only main window.
+          var targetAnchor = document.getElementById(anchorId);
+          var rect = targetAnchor.getBoundingClientRect();
+          console.log(targetAnchor);
+          console.log(rect);
+          var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+          window.scroll({
+            top: rect.top + rect.height / 2 - viewHeight /2,
+            behavior: 'smooth'
+          });*/
+          var targetAnchor = document.getElementById(anchorId);
+          var contentDiv = document.getElementsByClassName("book-body")[0];
+          var topPos = contentDiv.offsetTop;
+          var windowSize = $(window).height();
+          console.log("topPos: "+topPos);
+          console.log("targetPos: "+targetAnchor.offsetTop);
+          console.log("windowSize:"+windowSize)
+          console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
+          contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
+        });
+      } else {
+        /*move the volume page to the element with id=anchorId*/
+        /*var targetAnchor = document.getElementById(anchorId);
+        targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
+        console.log(targetAnchor);*/
+        /*window.location.hash = "";
+        window.location.hash = anchorId;
+        window.location.hash = anchorId;
+        console.log("#"+anchorId);*/
+        /*//This approach does not work at all: scrolls only main window.
+        var targetAnchor = $("#"+anchorId);
+        //$("#content").animate(
+        $("html, body").animate(
+          {scrollTop: targetAnchor.offset().top},
+          1000
+        );*/
+        /*//This approach does not work at all: scrolls only main window.
+        var targetAnchor = document.getElementById(anchorId);
+        var rect = targetAnchor.getBoundingClientRect();
+        console.log(targetAnchor);
+        console.log(rect);
+        var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        window.scroll({
+          top: rect.top + rect.height / 2 - viewHeight /2,
+          behavior: 'smooth'
+        });*/
+        var targetAnchor = document.getElementById(anchorId);
+        var contentDiv = document.getElementsByClassName("book-body")[0];
+        var topPos = contentDiv.offsetTop;
+        var windowSize = $(window).height();
+        console.log("topPos: "+topPos);
+        console.log("targetPos: "+targetAnchor.offsetTop);
+        console.log("windowSize:"+windowSize)
+        console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
+        contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
+      }
+    }
+
+    function padWithZeros(number, width) {
+      number = number + "";
+      if (number.length >= width) {
+        return number;
+      } else {
+        return new Array(width - number.length +1).join("0") + number;
+      }
+    }
+    document.getElementById("nav-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      /*console.log("Clicked Go");*/
+      var vol = volSel.value;
+      console.log("vol: "+vol);
+      /*var targetPage = parseInt(pageSel.value, 10);
+      if (page >= 1) {
+        page = page-1; //page number is at bottom of page
+      }
+      var anchor = "v"+vol+"p"+padWithZeros(targetPage, 3);*/
+      var targetPage = pageSel.value;
+      var pages = volPages[vol];
+      var index = pages.indexOf(targetPage);
+      /*if (index > 0) {
+        targetPage = pages[index-1];
+      }*/
+
+      console.log("targetPage: "+targetPage);
+      var anchor = "v"+vol+"p"+targetPage;
+      goToAnchor(vol, anchor);
+      return false;
+    });
+
+    /*Adapt the page numbers list when the volume number changes:*/
+    volSel.addEventListener("change", function(event) {
+      var vol = this.value;
+      var page = pageSel.value;
+      loadPageNumbers(vol, page);
+    });
+
+
+</script>
+</body>
+</html>
