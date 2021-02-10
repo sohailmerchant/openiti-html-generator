@@ -53,18 +53,16 @@
                     <div class='col-12'>
                         <div class="btn">
                             <a class='nav-link pull-right' title="Go to top">
-                                <i id="back-to-top" class="bi bi-arrow-bar-up">
-                                </i> 
+                                <i id="back-to-top" class="bi bi-arrow-bar-up"></i> 
                             </a>
                           
                             <a class='nav-link pull-right' title="Increase fonts">
                                 <i class="btn bi bi-fonts font-default pull-left"></i>
                             </a>
+
                             <a class='nav-link pull-right' title="Turn light off">
-                                <i class="btn bi bi-lightbulb-off"></i></a>
-
-
-
+                                <i class="btn bi bi-lightbulb-off"></i>
+                            </a>
 
                             <div class="nav-link pull-right dropdown">
                                 <a class='' id="dropdownMenuButton" data-bs-toggle="dropdown" role="button"
@@ -84,7 +82,6 @@
 
                         </div>
                     </div>
-
                 </div>
                 <div class="pull-left" id="nav-div">
                     <form id="nav-form">
@@ -96,70 +93,46 @@
                     </form>
                 </div>
                 <div class="pull-left">
-
-
                     <a class="navbar-brand mx-auto" href="http://www.kitab-project.org" target="_blank">
                         <img src="../img/kitab-logo.png" width="60px" />
                     </a>
-
-
-
-
                 </div>
-
             </div>
-
         </nav>
 
 
-
-
-
         <div class="book-body container fixed">
-
             <div class='row'>
                 <div class='col-12'>
                     <div class="row top-heading-panel content-outer-spacing">
-
                     </div>
                 </div>
                 <div class="col-12" id="meta">
                 </div>
             </div>
+
             <div class="row justify-content-md-center" id="book-main">
-
-
-
                 <div class="col-lg-8 col-sm-12" id="content">
-
-
-
-
-
-
 
                 </div>
             </div>
-        </div>
 
-
-    </div>
-
-
-
-
-    <div class="row mt-5" id='footer'>
-        <div class="col-md-12">
-            The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan University, London, and has received funding from the European Research Council (ERC) under the European Union&apos;s
+            <div class="row mt-5" id='footer'>
+                <div class="col-md-12">
+                    The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan University, London, and has received funding from the European Research Council (ERC) under the European Union&apos;s
             Horizon 2020 research and innovation programme (Grant agreement No. 772989)
             
+                </div>
+                <div class="col-md-12">
+                    <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50"/>
+                </div>
+            </div>
+
         </div>
-        <div class="col-md-12">
-            <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50"/>
-        </div>
-    </div>
+
 
     </div>
+
 
 <script>
     var pageSel = document.getElementById("page-select");
@@ -252,12 +225,12 @@
       var page = pageSel.value;
       console.log("loading volume "+vol);
       await $.getJSON(vol+".json", function(json){
-        /*$('#loading').show();*/
+        $('#loading').style.display = "block";
         $('#content').empty().append(json["content"]);
         /*console.log("json loaded");*/
         window.thisVolume = vol;
-        /*$('#loading').hide();
-        $('#loading').fadeOut("slow");*/
+        $('#loading').hide();
+        $('#loading').fadeOut("slow");
         /*Load volume and page numbers in page-nav form:*/
         loadVolumeNumbers(vol);
         loadPageNumbers(vol, page);
@@ -270,15 +243,76 @@
         loadVolume(vol, false).then(res => {
           console.log("Volume loaded");
           console.log("Go to anchor "+anchorId);
+          /*move the volume page to the element with id=anchorId*/
+          /*var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
+          console.log(targetAnchor);*/
+          /*window.location.hash = "";
+          window.location.hash = anchorId;
+          window.location.hash = anchorId;
+          console.log("#"+anchorId);*/
+          /*//This approach does not work at all: scrolls only main window.
+          var targetAnchor = $("#"+anchorId);
+          //$("#content").animate(
+          $("html, body").animate(
+            {scrollTop: targetAnchor.offset().top},
+            1000
+          );*/
+          /*//This approach does not work at all: scrolls only main window.
           var targetAnchor = document.getElementById(anchorId);
-          targetAnchor.scrollIntoView({block: 'nearest'});
+          var rect = targetAnchor.getBoundingClientRect();
           console.log(targetAnchor);
+          console.log(rect);
+          var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+          window.scroll({
+            top: rect.top + rect.height / 2 - viewHeight /2,
+            behavior: 'smooth'
+          });*/
+          var targetAnchor = document.getElementById(anchorId);
+          var contentDiv = document.getElementsByClassName("book-body")[0];
+          var topPos = contentDiv.offsetTop;
+          var windowSize = $(window).height();
+          console.log("topPos: "+topPos);
+          console.log("targetPos: "+targetAnchor.offsetTop);
+          console.log("windowSize:"+windowSize)
+          console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
+          contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
         });
       } else {
-          console.log("Go to anchor "+anchorId);
-          var targetAnchor = document.getElementById(anchorId);
-          targetAnchor.scrollIntoView({block: 'nearest'});
-          console.log(targetAnchor);
+        /*move the volume page to the element with id=anchorId*/
+        /*var targetAnchor = document.getElementById(anchorId);
+        targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
+        console.log(targetAnchor);*/
+        /*window.location.hash = "";
+        window.location.hash = anchorId;
+        window.location.hash = anchorId;
+        console.log("#"+anchorId);*/
+        /*//This approach does not work at all: scrolls only main window.
+        var targetAnchor = $("#"+anchorId);
+        //$("#content").animate(
+        $("html, body").animate(
+          {scrollTop: targetAnchor.offset().top},
+          1000
+        );*/
+        /*//This approach does not work at all: scrolls only main window.
+        var targetAnchor = document.getElementById(anchorId);
+        var rect = targetAnchor.getBoundingClientRect();
+        console.log(targetAnchor);
+        console.log(rect);
+        var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        window.scroll({
+          top: rect.top + rect.height / 2 - viewHeight /2,
+          behavior: 'smooth'
+        });*/
+        var targetAnchor = document.getElementById(anchorId);
+        var contentDiv = document.getElementsByClassName("book-body")[0];
+        var topPos = contentDiv.offsetTop;
+        var windowSize = $(window).height();
+        console.log("topPos: "+topPos);
+        console.log("targetPos: "+targetAnchor.offsetTop);
+        console.log("windowSize:"+windowSize)
+        console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
+        contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
       }
     }
 
@@ -295,12 +329,20 @@
       /*console.log("Clicked Go");*/
       var vol = volSel.value;
       console.log("vol: "+vol);
-      var targetPage = parseInt(pageSel.value, 10);
-      /*if (page >= 1) {
+      /*var targetPage = parseInt(pageSel.value, 10);
+      if (page >= 1) {
         page = page-1; //page number is at bottom of page
+      }
+      var anchor = "v"+vol+"p"+padWithZeros(targetPage, 3);*/
+      var targetPage = pageSel.value;
+      var pages = volPages[vol];
+      var index = pages.indexOf(targetPage);
+      /*if (index > 0) {
+        targetPage = pages[index-1];
       }*/
-      var anchor = "v"+vol+"p"+padWithZeros(targetPage, 3);
+
       console.log("targetPage: "+targetPage);
+      var anchor = "v"+vol+"p"+targetPage;
       goToAnchor(vol, anchor);
       return false;
     });
@@ -315,7 +357,4 @@
 
 </script>
 </body>
-
-
-
 </html>
