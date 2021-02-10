@@ -261,11 +261,12 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
     """
     # copy css, js and img folders into outfolder:
     copy_infrastructure(outfolder)
-    
+    folders = []
     for fp in get_all_text_files_in_folder(folder):
         version_uri = re.split(r"[/\\]", fp)[-1]
         print(version_uri)
         version_uri = ".".join(version_uri.split(".")[:3]) # split off extension
+        folders.append(version_uri)
         book_id = version_uri.split(".")[2].split("-")[0]
         #print(book_id)
         with open(fp, encoding='utf-8') as f:
@@ -299,6 +300,11 @@ def convert_all_files_in_folder(folder, meta_fp='metadata.csv',
             
             outfp = os.path.join(outfolder, version_uri, vol_no+".json")
             create_json_file(html_str, pages, vols, outfp)
+
+        # add fp to index.md file:
+        outfp = os.path.join(outfolder, "index.md")
+        with open(outfp, mode="a", encoding="utf-8") as file:
+            file.write("[{0}]({0})\n".format(version_uri))
 
 
 def copy_infrastructure(outfolder, infra_folders=["css", "js", "img"]):
