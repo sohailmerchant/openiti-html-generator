@@ -50,15 +50,6 @@
         <nav class="navbar navbar-light shadow sticky-top">
             <div class="container-fluid">
                 <div class='row'>
-                    <div>
-                        <form id="nav-form">
-                          <span>ج:</span>
-                          <select id="vol-select"></select>
-                          <span>ص:</span>
-                          <select id="page-select"></select>
-                          <input type="submit" value="Go"/>
-                        </form>
-                    </div>
                     <div class='col-12'>
                         <div class="btn">
                             <a class='nav-link pull-right' title="Go to top">
@@ -93,8 +84,17 @@
 
                         </div>
                     </div>
-                </div>
 
+                </div>
+                <div class="pull-left" id="nav-div">
+                    <form id="nav-form">
+                      <span>ج:</span>
+                      <select id="vol-select"></select>
+                      <span>ص:</span>
+                      <select id="page-select"></select>
+                      <input type="submit" value="Go" id="nav-submit-btn"/>
+                    </form>
+                </div>
                 <div class="pull-left">
 
 
@@ -162,16 +162,17 @@
     </div>
 
 <script>
-
+    var pageSel = document.getElementById("page-select");
+    var volSel = document.getElementById("vol-select");
     var thisVolume = "01";
     var volPages = "volPages"; /*loaded by html_builder*/
-    console.log("Load initial volume "+thisVolume);
 
     CollapsibleLists.apply();
     console.log("Applied CollapsibleLists");
 
     $(document).ready(function () {
-        loadVolume(thisVolume, true).then(res => {
+        console.log("Load initial volume "+thisVolume);
+        loadVolume(thisVolume).then(res => {
           console.log("Initial volume loaded");
           $('#loading').hide();
           $('#loading').fadeOut("slow");
@@ -222,19 +223,23 @@
         } );
     });
 
-    function loadPageNumbers(vol) {
-      var pageSel = document.getElementById("page-select");
+    function loadPageNumbers(vol, page) {
+      /*var pageSel = document.getElementById("page-select");*/
       pageSel.innerHTML = '';
       volPages[vol].forEach(function(p, index) {
         pageSel.options[pageSel.options.length] = new Option(p, p);
       });
+      if (page) {
+        pageSel.value=page;
+      }
     }
 
     function loadVolumeNumbers(vol) {
-      var volSel = document.getElementById("vol-select");
+      /*var volSel = document.getElementById("vol-select");*/
       volSel.innerHTML = '';
       /*console.log(Object.keys(volPages));*/
       /*console.log(Object.keys(volPages).sort());*/
+
       Object.keys(volPages).sort().forEach(function(v, index) {
         /*console.log(v);*/
         volSel.options[volSel.options.length] = new Option(v, v);
@@ -242,33 +247,41 @@
       volSel.value = vol;
     }
 
-    async function loadVolume(vol, forceLoad) {
-      /*Load volume json if it is not already loaded*/
-      if (vol != window.thisVolume || forceLoad) {
-          await $.getJSON(vol+".json", function(json){
-              /*$('#loading').show();*/
-              $('#content').empty().append(json["content"]);
-              /*console.log("json loaded");*/
-              window.thisVolume = vol;
-              /*$('#loading').hide();
-              $('#loading').fadeOut("slow");*/
-              /*Load volume and page numbers in page-nav form:*/
-              loadVolumeNumbers(vol);
-              loadPageNumbers(vol);
-              return true;
-          } );
-
-
-      }
-      return true;
+    async function loadVolume(vol) {
+      /*Load volume json */
+      var page = pageSel.value;
+      console.log("loading volume "+vol);
+      await $.getJSON(vol+".json", function(json){
+        /*$('#loading').show();*/
+        $('#content').empty().append(json["content"]);
+        /*console.log("json loaded");*/
+        window.thisVolume = vol;
+        /*$('#loading').hide();
+        $('#loading').fadeOut("slow");*/
+        /*Load volume and page numbers in page-nav form:*/
+        loadVolumeNumbers(vol);
+        loadPageNumbers(vol, page);
+        return true;
+      } );
     }
 
     function goToAnchor(vol, anchorId) {
-      loadVolume(vol, false).then(res => {
-        var targetAnchor = document.getElementById(anchorId);
-        targetAnchor.scrollIntoView();
-      });
+      if (vol != window.thisVolume) {
+        loadVolume(vol, false).then(res => {
+          console.log("Volume loaded");
+          console.log("Go to anchor "+anchorId);
+          var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});
+          console.log(targetAnchor);
+        });
+      } else {
+          console.log("Go to anchor "+anchorId);
+          var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});
+          console.log(targetAnchor);
+      }
     }
+
     function padWithZeros(number, width) {
       number = number + "";
       if (number.length >= width) {
@@ -279,18 +292,24 @@
     }
     document.getElementById("nav-form").addEventListener("submit", function(event) {
       event.preventDefault();
-      var vol = document.getElementById("vol-select").value;
-      var page = parseInt(document.getElementById("page-select").value, 10);
-      if (page >= 1) {
-        page = page-1 /*page number is at bottom of page*/
-      }
-      var anchor = "v"+vol+"p"+padWithZeros(page, 3);
+      /*console.log("Clicked Go");*/
+      var vol = volSel.value;
+      console.log("vol: "+vol);
+      var targetPage = parseInt(pageSel.value, 10);
+      /*if (page >= 1) {
+        page = page-1; //page number is at bottom of page
+      }*/
+      var anchor = "v"+vol+"p"+padWithZeros(targetPage, 3);
+      console.log("targetPage: "+targetPage);
       goToAnchor(vol, anchor);
+      return false;
     });
-    /*Adapt the page numbers when the volume number changes:*/
-    document.getElementById("vol-select").addEventListener("change", function(event) {
+
+    /*Adapt the page numbers list when the volume number changes:*/
+    volSel.addEventListener("change", function(event) {
       var vol = this.value;
-      loadPageNumbers(vol);
+      var page = pageSel.value;
+      loadPageNumbers(vol, page);
     });
 
 

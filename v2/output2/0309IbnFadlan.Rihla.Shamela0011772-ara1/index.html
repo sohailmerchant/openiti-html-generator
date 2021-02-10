@@ -52,15 +52,6 @@
 <nav class="navbar navbar-light shadow sticky-top">
 <div class="container-fluid">
 <div class="row">
-<div>
-<form id="nav-form">
-<span>ج:</span>
-<select id="vol-select"></select>
-<span>ص:</span>
-<select id="page-select"></select>
-<input type="submit" value="Go"/>
-</form>
-</div>
 <div class="col-12">
 <div class="btn">
 <a class="nav-link pull-right" title="Go to top">
@@ -77,7 +68,7 @@
 <i class="btn bi bi-info "></i>
 </a>
 <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
-<div class="col-12" id="metadata-content"><label>status: pri</label><label>author_lat: Ibn Fadlan</label><label>versionUri: 0309IbnFadlan.Rihla.Shamela0011772-ara1</label><label>author_ar: أحمد بن فضلان بن العباس بن راشد ابن حماد (المتوفى: بعد 310هـ)</label><label>url: https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0309IbnFadlan/0309IbnFadlan.Rihla/0309IbnFadlan.Rihla.Shamela0011772-ara1.completed</label><label>tags: COMPLETED :: CENT0400 :: GEO :: PPE :: _BULDAN :: _JUGHRAFIYA :: _MUDHAKKARAT :: _RIHLAT :: _TARIKH :: GAL@period-classical :: GAL@literature-islamic :: GAL@geographies :: GAL@0750-1000CE :: GAL@literature-arabic :: Shamela@البلدان والجغرافيا والرحلات</label><label>title_ar: رحلة ابن فضلان إلى بلاد الترك والروس والصقالبة</label><label>date: 0309</label><label>tok_length: 17073</label><label>id: Shamela0011772</label><label>char_length: 74625</label><label>ed_info: دار السويدي، أبو ظبي :: http://www.worldcat.org/oclc/62119608</label><label>title_lat: Rihla</label><label>author_lat_full_name: </label><label>book: 0309IbnFadlan.Rihla</label><label>author_from_uri: Ibn Fadlan</label><label>author_lat_shuhra: </label>
+<div class="col-12" id="metadata-content"><label>status: pri</label><label>url: https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0309IbnFadlan/0309IbnFadlan.Rihla/0309IbnFadlan.Rihla.Shamela0011772-ara1.completed</label><label>author_from_uri: Ibn Fadlan</label><label>id: Shamela0011772</label><label>author_lat: Ibn Fadlan</label><label>tags: COMPLETED :: CENT0400 :: GEO :: PPE :: _BULDAN :: _JUGHRAFIYA :: _MUDHAKKARAT :: _RIHLAT :: _TARIKH :: GAL@period-classical :: GAL@literature-islamic :: GAL@geographies :: GAL@0750-1000CE :: GAL@literature-arabic :: Shamela@البلدان والجغرافيا والرحلات</label><label>date: 0309</label><label>author_lat_shuhra: </label><label>char_length: 74625</label><label>tok_length: 17073</label><label>author_ar: أحمد بن فضلان بن العباس بن راشد ابن حماد (المتوفى: بعد 310هـ)</label><label>book: 0309IbnFadlan.Rihla</label><label>title_lat: Rihla</label><label>author_lat_full_name: </label><label>title_ar: رحلة ابن فضلان إلى بلاد الترك والروس والصقالبة</label><label>versionUri: 0309IbnFadlan.Rihla.Shamela0011772-ara1</label><label>ed_info: دار السويدي، أبو ظبي :: http://www.worldcat.org/oclc/62119608</label>
 </div>
 </div>
 </div>
@@ -85,6 +76,15 @@
 <i class="btn bi bi-list"></i></a>
 </div>
 </div>
+</div>
+<div class="pull-left" id="nav-div">
+<form id="nav-form">
+<span>ج:</span>
+<select id="vol-select"></select>
+<span>ص:</span>
+<select id="page-select"></select>
+<input id="nav-submit-btn" type="submit" value="Go"/>
+</form>
 </div>
 <div class="pull-left">
 <a class="navbar-brand mx-auto" href="http://www.kitab-project.org" target="_blank">
@@ -119,16 +119,17 @@
 </div>
 </div>
 <script>
-
+    var pageSel = document.getElementById("page-select");
+    var volSel = document.getElementById("vol-select");
     var thisVolume = "01";
     var volPages = {"01": ["000", "000", "003", "004", "005", "007", "008", "009", "011", "012", "013", "014", "015", "016", "017", "018", "019", "020", "021", "022", "023", "024", "025", "026", "027", "028", "029", "030", "031", "032", "033", "034", "035", "036", "037", "039", "040", "041", "042", "043", "044", "045", "046", "047", "048", "049", "050", "051", "052", "053", "058", "059", "060", "061", "062", "063", "064", "065", "066", "067", "068", "069", "070", "071", "072", "073", "074", "075", "076", "077", "078", "079", "080", "081", "082", "083", "084", "085", "086", "087", "088", "089", "092", "093", "094", "095", "096", "097", "098", "099", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "115", "116", "117", "118", "123", "124", "125", "127", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "151"]}; /*loaded by html_builder*/
-    console.log("Load initial volume "+thisVolume);
 
     CollapsibleLists.apply();
     console.log("Applied CollapsibleLists");
 
     $(document).ready(function () {
-        loadVolume(thisVolume, true).then(res => {
+        console.log("Load initial volume "+thisVolume);
+        loadVolume(thisVolume).then(res => {
           console.log("Initial volume loaded");
           $('#loading').hide();
           $('#loading').fadeOut("slow");
@@ -179,19 +180,23 @@
         } );
     });
 
-    function loadPageNumbers(vol) {
-      var pageSel = document.getElementById("page-select");
+    function loadPageNumbers(vol, page) {
+      /*var pageSel = document.getElementById("page-select");*/
       pageSel.innerHTML = '';
       volPages[vol].forEach(function(p, index) {
         pageSel.options[pageSel.options.length] = new Option(p, p);
       });
+      if (page) {
+        pageSel.value=page;
+      }
     }
 
     function loadVolumeNumbers(vol) {
-      var volSel = document.getElementById("vol-select");
+      /*var volSel = document.getElementById("vol-select");*/
       volSel.innerHTML = '';
       /*console.log(Object.keys(volPages));*/
       /*console.log(Object.keys(volPages).sort());*/
+
       Object.keys(volPages).sort().forEach(function(v, index) {
         /*console.log(v);*/
         volSel.options[volSel.options.length] = new Option(v, v);
@@ -199,33 +204,41 @@
       volSel.value = vol;
     }
 
-    async function loadVolume(vol, forceLoad) {
-      /*Load volume json if it is not already loaded*/
-      if (vol != window.thisVolume || forceLoad) {
-          await $.getJSON(vol+".json", function(json){
-              /*$('#loading').show();*/
-              $('#content').empty().append(json["content"]);
-              /*console.log("json loaded");*/
-              window.thisVolume = vol;
-              /*$('#loading').hide();
-              $('#loading').fadeOut("slow");*/
-              /*Load volume and page numbers in page-nav form:*/
-              loadVolumeNumbers(vol);
-              loadPageNumbers(vol);
-              return true;
-          } );
-
-
-      }
-      return true;
+    async function loadVolume(vol) {
+      /*Load volume json */
+      var page = pageSel.value;
+      console.log("loading volume "+vol);
+      await $.getJSON(vol+".json", function(json){
+        /*$('#loading').show();*/
+        $('#content').empty().append(json["content"]);
+        /*console.log("json loaded");*/
+        window.thisVolume = vol;
+        /*$('#loading').hide();
+        $('#loading').fadeOut("slow");*/
+        /*Load volume and page numbers in page-nav form:*/
+        loadVolumeNumbers(vol);
+        loadPageNumbers(vol, page);
+        return true;
+      } );
     }
 
     function goToAnchor(vol, anchorId) {
-      loadVolume(vol, false).then(res => {
-        var targetAnchor = document.getElementById(anchorId);
-        targetAnchor.scrollIntoView();
-      });
+      if (vol != window.thisVolume) {
+        loadVolume(vol, false).then(res => {
+          console.log("Volume loaded");
+          console.log("Go to anchor "+anchorId);
+          var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});
+          console.log(targetAnchor);
+        });
+      } else {
+          console.log("Go to anchor "+anchorId);
+          var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({block: 'nearest'});
+          console.log(targetAnchor);
+      }
     }
+
     function padWithZeros(number, width) {
       number = number + "";
       if (number.length >= width) {
@@ -236,18 +249,24 @@
     }
     document.getElementById("nav-form").addEventListener("submit", function(event) {
       event.preventDefault();
-      var vol = document.getElementById("vol-select").value;
-      var page = parseInt(document.getElementById("page-select").value, 10);
-      if (page >= 1) {
-        page = page-1 /*page number is at bottom of page*/
-      }
-      var anchor = "v"+vol+"p"+padWithZeros(page, 3);
+      /*console.log("Clicked Go");*/
+      var vol = volSel.value;
+      console.log("vol: "+vol);
+      var targetPage = parseInt(pageSel.value, 10);
+      /*if (page >= 1) {
+        page = page-1; //page number is at bottom of page
+      }*/
+      var anchor = "v"+vol+"p"+padWithZeros(targetPage, 3);
+      console.log("targetPage: "+targetPage);
       goToAnchor(vol, anchor);
+      return false;
     });
-    /*Adapt the page numbers when the volume number changes:*/
-    document.getElementById("vol-select").addEventListener("change", function(event) {
+
+    /*Adapt the page numbers list when the volume number changes:*/
+    volSel.addEventListener("change", function(event) {
       var vol = this.value;
-      loadPageNumbers(vol);
+      var page = pageSel.value;
+      loadPageNumbers(vol, page);
     });
 
 

@@ -316,8 +316,8 @@ def copy_infrastructure(outfolder, infra_folders=["css", "js", "img"]):
 if __name__ == "__main__":
     #path = r"/mnt/c/Development Work/0400AH/data/"
     #path = r"/mnt/c/Development Work/0400AH/data/test/"
-    path = "test"
-    meta_fp='metadata.csv'
-    template_path="template/main_volumes.html"
-    outfolder = "output2"
+    path = r"test"
+    meta_fp= r'metadata.csv'
+    template_path= r"template/main_volumes.html"
+    outfolder = r"output2"
     convert_all_files_in_folder(path, meta_fp, template_path, outfolder)
