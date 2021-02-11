@@ -2,139 +2,253 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" "script-src 'self' https://raw.githubusercontent.com/ ">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
 
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
         integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
-    <link rel="stylesheet" type="text/css" href="../css/stylev2.css" />
-    <script type="text/javascript" src="../js/CollapsibleLists.js"></script>
-    <!-- <link rel="stylesheet"
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/sohailmerchant/kitab-cdn@main/css/stylev2.css" crossorigin="anonymous" />
+  <script type="application/javascript"
+    src="https://cdn.jsdelivr.net/gh/sohailmerchant/kitab-cdn@main/js/CollapsibleLists.js"
+    crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css" /> -->
 
 
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-    </script>
+  </script>
 
 </head>
 
 <body>
-    <div id="loading">
-        <img id="loading-image" src="../img/spinner1.gif" alt="Loading..." />
-    </div>
+  <div id="loading">
+    <img id="loading-image" src="../img/spinner1.gif" alt="Loading..." />
+  </div>
 
-    <div class='page-wrapper toggled' id='wrapper'>
+  <div class='page-wrapper toggled' id='wrapper'>
 
-        <div id="sidebar-wrapper">
-
-        </div>
-
-
-        <div class="book container body-inner" lang="ara"></div>
-
-        <nav class="navbar navbar-light shadow sticky-top">
-            <div class="container-fluid">
-                <div class='row'>
-                    <div class='col-12'>
-                        <div class="btn">
-                            <a class='nav-link pull-right' title="Go to top">
-                                <i id="back-to-top" class="bi bi-arrow-bar-up"></i> 
-                            </a>
-                          
-                            <a class='nav-link pull-right' title="Increase fonts">
-                                <i class="btn bi bi-fonts font-default pull-left"></i>
-                            </a>
-
-                            <a class='nav-link pull-right' title="Turn light off">
-                                <i class="btn bi bi-lightbulb-off"></i>
-                            </a>
-
-                            <div class="nav-link pull-right dropdown">
-                                <a class='' id="dropdownMenuButton" data-bs-toggle="dropdown" role="button"
-                                    aria-haspopup="true" aria-expanded="false" title="Book Metadata">
-                                    <i class="btn bi bi-info  "></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <div class="col-12" id="metadata-content">
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class='nav-link pull-right' href="#menu-toggle" id="menu-toggle" title="Book Chapters">
-                                <i class="btn bi bi-list"></i></a>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="pull-left" id="nav-div">
-                    <form id="nav-form">
-                      <span>ج:</span>
-                      <select id="vol-select"></select>
-                      <span>ص:</span>
-                      <select id="page-select"></select>
-                      <input type="submit" value="Go" id="nav-submit-btn"/>
-                    </form>
-                </div>
-                <div class="pull-left">
-                    <a class="navbar-brand mx-auto" href="http://www.kitab-project.org" target="_blank">
-                        <img src="../img/kitab-logo.png" width="60px" />
-                    </a>
-                </div>
-            </div>
-        </nav>
-
-
-        <div class="book-body container fixed">
-            <div class='row'>
-                <div class='col-12'>
-                    <div class="row top-heading-panel content-outer-spacing">
-                    </div>
-                </div>
-                <div class="col-12" id="meta">
-                </div>
-            </div>
-
-            <div class="row justify-content-md-center" id="book-main">
-                <div class="col-lg-8 col-sm-12" id="content">
-
-                </div>
-            </div>
-
-            <div class="row mt-5" id='footer'>
-                <div class="col-md-12">
-                    The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan University, London, and has received funding from the European Research Council (ERC) under the European Union&apos;s
-            Horizon 2020 research and innovation programme (Grant agreement No. 772989)
-            
-                </div>
-                <div class="col-md-12">
-                    <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50"/>
-                </div>
-            </div>
-
-        </div>
-
+    <div id="sidebar-wrapper">
 
     </div>
 
 
-<script>
+    <div class="book body-inner" lang="ara">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom" style="direction: ltr;" >
+      <div class='mr-auto d-flex justify-content-left'>
+      <a class="navbar-brand ms-2" href="http://www.kitab-project.org" target="_blank">
+        <img src="https://cdn.jsdelivr.net/gh/sohailmerchant/kitab-cdn@main/img/kitab-logo.png" width="60px"
+          class="d-inline-block align-top" />
+      </a>
+    </div>
+    <div class="navbar-nav mx-auto btn-toolbar" style="direction: rtl;">
+      <div class="d-flex justify-content-center">
+      
+      <form class="row" id="nav-form" style="margin-bottom: 0px;">
+        
+        <span class="btn col justify-content-center">ج:</span>
+        <select class="col form-select" id="vol-select pull-left"></select>
+        <span class="btn col justify-content-center">ص:</span>
+        <select class="col form-select" id="page-select pull-left"></select>
+        <button type="submit" value="Go" id="nav-submdit-btn" class="btn col pull-right mx-3">Go</button>
+      </form>
+    </div>
+  </div>
+
+
+
+        <div class="btn-toolbar navbar-nav ml-auto d-flex justify-content-right">
+          <div class="btn-group">
+            <a class='nav-link pull-right' title="Go to top">
+              <i id="back-to-top" class=" btn bi bi-arrow-up-circle"></i>
+            </a>
+
+            <a class='nav-link pull-right' title="Increase fonts">
+              <i class="btn bi bi-fonts font-default pull-left"></i>
+            </a>
+
+            <a class='nav-link pull-right' title="Turn light off">
+              <i class="btn bi bi-lightbulb-off"></i>
+            </a>
+
+            <div class="nav-link pull-right dropdown">
+              <a class='' id="dropdownMenuButton" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false" title="Book Metadata">
+                <i class="btn bi bi-info"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="col-12" id="metadata-content">
+
+                </div>
+              </div>
+            </div>
+
+            <a class='nav-link pull-right' href="#menu-toggle" id="menu-toggle" title="Book Chapters">
+              <i class="btn bi bi-list"></i></a>
+
+
+          </div>
+        </div>
+    
+
+
+
+
+
+
+
+    </nav>
+
+
+    <div class="book-body fixed pt-5">
+      <div class='row'>
+        <div class='col-12'>
+          <div class="row top-heading-panel content-outer-spacing">
+          </div>
+        </div>
+        <div class="col-12" id="meta">
+        </div>
+      </div>
+
+      <div class="row justify-content-md-center" id="book-main">
+        <div class="col-lg-8 col-sm-12" id="content">
+
+          ### === بسم الله الرحمن الرحيم
+الحمد لله الأول قبل كل أول، والآخر بعد كل آخر، والدائم بلا زوال، والقائم على كل شيء بغير انتقال، والخالق خلقه من غير اصل ولا مثال، فهو الفرد الواحد من غير عدد، وهو الباقي بعد كل أحد، إلى غير نهاية ولا أمد له الكبرياء والعظمه، والبهاء والعزه، والسلطان والقدرة، تعالى عن أن يكون له شريك في سلطانه او في وحدانيته نديد، أو في تدبيره معين أو ظهير، أو أن يكون له ولد، أو صاحبه او كفء أحد، لا تحيط به الأوهام، ولا تحويه الأقطار، ولا تدركه الأبصار، وهو يدرك الأبصار، وهو اللطيف الخبير.
+
+أحمده على آلائه، وأشكره على نعمائه، حمد من أفرده بالحمد، وشكر من رجا بالشكر منه المزيد، وأستهديه من القول والعمل لما يقربني منه ويرضيه، وأومن به إيمان مخلص له التوحيد، ومفرد له التمجيد.
+
+وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده النجيب، ورسوله الأمين، اصطفاه لرسالته، وابتعثه بوحيه، داعيا خلقه إلى عبادته، فصدع بأمره، وجاهد في سبيله، ونصح لأمته، وعبده حتى أتاه اليقين من عنده، غير مقصر في بلاغ، ولا وان في جهاد، صلى الله عليه أفضل صلاة وأزكاها، وسلم
+
+Vol. 01, p. 003
+أما بعد، فإن الله جل جلاله، وتقدست أسماؤه، خلق خلقه من غير ضرورة كانت به إلى خلقهم، وأنشأهم من غير حاجة كانت به إلى إنشائهم، بل خلق من خصه منهم بامره ونهيه، وامتحنه بعبادته، ليعبدوه فيجود عليهم بنعمه، وليحمدوه على نعمه فيزيدهم من فضله ومننه، ويسبغ عليهم فضله وطوله، كما قال عز وجل: «وما خلقت الجن والإنس إلا ليعبدون ما أريد منهم من رزق وما أريد أن يطعمون إن الله هو الرزاق ذو القوة المتين» .
+
+فلم يزده خلقه إياهم- إذ خلقهم- في سلطانه على ما لم يزل قبل خلقه إياهم مثقال ذرة، ولا هو إن أفناهم واعدمهم ينقصه افناؤه إياهم ميزان شعره، لأنه لا تغيره الأحوال، ولا يدخله الملال، ولا ينقص سلطانه الأيام والليال، لأنه خالق الدهور والأزمان، فعم جميعهم في العاجل فضله وجوده، وشملهم كرمه وطوله، فجعل لهم أسماعا وأبصارا وأفئدة، وخصهم بعقول يصلون بها الى التمييز بين الحق والباطل، ويعرفون بها المنافع والمضار، وجعل لهم الأرض بساطا ليسلكوا منها سبلا فجاجا، والسماء سقفا محفوظا، وبناء مسموكا، وأنزل لهم منها الغيث بالإدرار، والأرزاق بالمقدار، واجرى لهم فيها قمر الليل وشمس النهار يتعاقبان بمصالحهم دائبين، فجعل لهم الليل لباسا، والنهار معاشا، وخالف- منا منه عليهم وتطولا- بين قمر الليل وشمس النهار، فمحا آية الليل وجعل آية النهار مبصرة، كما قال جل جلاله وتقدست أسماؤه: «وجعلنا الليل والنهار آيتين فمحونا آية الليل وجعلنا آية النهار مبصرة لتبتغوا فضلا
+
+Vol. 01, p. 004
+من ربكم ولتعلموا عدد السنين والحساب وكل شيء فصلناه تفصيلا» .
+
+وليصلوا بذلك إلى العلم بأوقات فروضهم التي فرضها عليهم في ساعات الليل والنهار والشهور والسنين، من الصلوات والزكوات والحج والصيام وغير ذلك من فروضهم، وحين حل ديونهم وحقوقهم، كما قال عز وجل: «يسئلونك عن الأهلة قل هي مواقيت للناس والحج» ، وقال: «هو الذي جعل الشمس ضياء والقمر نورا وقدره منازل لتعلموا عدد السنين والحساب ما خلق الله ذلك إلا بالحق يفصل الآيات لقوم يعلمون إن في اختلاف الليل والنهار وما خلق الله في السماوات والأرض لآيات لقوم يتقون» .
+
+إنعاما منه بكل ذلك على خلقه، وتفضلا منه به عليهم وتطولا، فشكره على نعمه التي أنعمها عليهم من خلقه خلق عظيم، فزاد كثيرا منهم من آلائه وأياديه، على ما ابتدأهم به من فضله وطوله، كما وعدهم جل جلاله بقوله: «وإذ تأذن ربكم لئن شكرتم لأزيدنكم ولئن كفرتم إن عذابي لشديد» ، وجمع لهم الى الزيادة التي زادهم في عاجل دنياهم، الفوز بالنعيم المقيم، والخلود في جنات النعيم، في آجل آخرتهم وأخر لكثير منهم الزيادة التي وعدهم فمدهم الى حين مصيرهم اليه ووقت قدومهم عليه، توفيرا منه كرامته عليهم يوم تبلى السرائر وكفر نعمه خلق منهم عظيم، فجحدوا آلاءه وعبدوا سواه، فسلب كثيرا منهم ما ابتدأهم به من الفضل والإحسان، وأحل
+
+Vol. 01, p. 005
+بهم النقمة المهلكة في العاجل، وذخر لهم العقوبة المخزية في الآجل، ومتع كثيرا منهم بنعمه ايام حياتهم استدراجا منه لهم، وتوقيرا منه عليهم أوزارهم، ليستحقوا من عقوبته في الآجل ما قد أعد لهم.
+
+نعوذ بالله من عمل يقرب من سخطه، ونسأله التوفيق لما يدني من رضاه ومحبته.
+
+قال أبو جعفر: وأنا ذاكر في كتابي هذا من ملوك كل زمان، من لدن ابتدأ ربنا جل جلاله خلق خلقه إلى حال فنائهم، من انتهى إلينا خبره ممن ابتدأه الله تعالى بآلائه ونعمه فشكر نعمه، من رسول له مرسل، أو ملك مسلط، أو خليفة مستخلف، فزاده إلى ما ابتدأه به من نعمه في العاجل نعما، وإلى ما تفضل به عليه فضلا، ومن أخر ذلك له منهم، وجعله له عنده ذخرا ومن كفر منهم نعمه فسلبه ما ابتدأه به من نعمه، وعجل له نقمه ومن كفر منهم نعمه فمتعه بما أنعم به عليه إلى حين وفاته وهلاكه، مقرونا ذكر كل من أنا ذاكره منهم في كتابي هذا بذكر زمانه، وجمل ما كان من حوادث الأمور في عصره وأيامه، إذ كان الاستقصاء في ذلك يقصر عنه العمر، وتطول به الكتب، مع ذكري مع ذلك مبلغ مدة أكله، وحين أجله، بعد تقديمي أمام ذلك ما تقديمه بنا أولى، والابتداء به قبله أحجى، من البيان عن الزمان: ما هو؟ وكم قدر جميعه، وابتداء أوله، وانتهاء آخره؟ وهل كان قبل خلق الله تعالى إياه شيء غيره؟ وهل هو فان؟ وهل بعد فنائه شيء غير وجه المسبح الخلاق، تعالى ذكره؟
+
+وما الذي كان قبل خلق الله إياه؟ وما هو كائن بعد فنائه وانقضائه؟ وكيف
+
+Vol. 01, p. 006
+كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+وإلى الله عز وجل أنا راغب في العون على ما أقصده وأنويه، والتوفيق لما ألتمسه وأبغيه، فإنه ولي الحول والقوة، وصلى الله على محمد نبيه وآله وسلم تسليما.
+
+وليعلم الناظر في كتابنا هذا أن اعتمادي في كل ما أحضرت ذكره فيه مما شرطت أني راسمه فيه، إنما هو على ما رويت من الأخبار التي أنا ذاكرها فيه، والآثار التي أنا مسندها إلى رواتها فيه، دون ما أدرك بحجج العقول، واستنبط
+
+Vol. 01, p. 007
+بفكر النفوس، إلا اليسير القليل منه، إذ كان العلم بما كان من أخبار الماضين، وما هو كائن من أنباء الحادثين، غير واصل إلى من لم يشاهدهم ولم يدرك زمانهم، إلا بأخبار المخبرين، ونقل الناقلين، دون الاستخراج بالعقول، والاستنباط بفكر النفوس فما يكن في كتابي هذا من خبر ذكرناه عن بعض الماضين مما يستنكره قارئه، أو يستشنعه سامعه، من أجل أنه لم يعرف له وجها في الصحة، ولا معنى في الحقيقة، فليعلم انه لم يؤت في ذلك من قبلنا، وإنما أتى من قبل بعض ناقليه إلينا، وإنا إنما أدينا ذلك على نحو ما أدي إلينا
+
+### === بسم الله الرحمن الرحيم
+الحمد لله الأول قبل كل أول، والآخر بعد كل آخر، والدائم بلا زوال، والقائم على كل شيء بغير انتقال، والخالق خلقه من غير اصل ولا مثال، فهو الفرد الواحد من غير عدد، وهو الباقي بعد كل أحد، إلى غير نهاية ولا أمد له الكبرياء والعظمه، والبهاء والعزه، والسلطان والقدرة، تعالى عن أن يكون له شريك في سلطانه او في وحدانيته نديد، أو في تدبيره معين أو ظهير، أو أن يكون له ولد، أو صاحبه او كفء أحد، لا تحيط به الأوهام، ولا تحويه الأقطار، ولا تدركه الأبصار، وهو يدرك الأبصار، وهو اللطيف الخبير.
+
+أحمده على آلائه، وأشكره على نعمائه، حمد من أفرده بالحمد، وشكر من رجا بالشكر منه المزيد، وأستهديه من القول والعمل لما يقربني منه ويرضيه، وأومن به إيمان مخلص له التوحيد، ومفرد له التمجيد.
+
+وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده النجيب، ورسوله الأمين، اصطفاه لرسالته، وابتعثه بوحيه، داعيا خلقه إلى عبادته، فصدع بأمره، وجاهد في سبيله، ونصح لأمته، وعبده حتى أتاه اليقين من عنده، غير مقصر في بلاغ، ولا وان في جهاد، صلى الله عليه أفضل صلاة وأزكاها، وسلم
+
+Vol. 01, p. 003
+أما بعد، فإن الله جل جلاله، وتقدست أسماؤه، خلق خلقه من غير ضرورة كانت به إلى خلقهم، وأنشأهم من غير حاجة كانت به إلى إنشائهم، بل خلق من خصه منهم بامره ونهيه، وامتحنه بعبادته، ليعبدوه فيجود عليهم بنعمه، وليحمدوه على نعمه فيزيدهم من فضله ومننه، ويسبغ عليهم فضله وطوله، كما قال عز وجل: «وما خلقت الجن والإنس إلا ليعبدون ما أريد منهم من رزق وما أريد أن يطعمون إن الله هو الرزاق ذو القوة المتين» .
+
+فلم يزده خلقه إياهم- إذ خلقهم- في سلطانه على ما لم يزل قبل خلقه إياهم مثقال ذرة، ولا هو إن أفناهم واعدمهم ينقصه افناؤه إياهم ميزان شعره، لأنه لا تغيره الأحوال، ولا يدخله الملال، ولا ينقص سلطانه الأيام والليال، لأنه خالق الدهور والأزمان، فعم جميعهم في العاجل فضله وجوده، وشملهم كرمه وطوله، فجعل لهم أسماعا وأبصارا وأفئدة، وخصهم بعقول يصلون بها الى التمييز بين الحق والباطل، ويعرفون بها المنافع والمضار، وجعل لهم الأرض بساطا ليسلكوا منها سبلا فجاجا، والسماء سقفا محفوظا، وبناء مسموكا، وأنزل لهم منها الغيث بالإدرار، والأرزاق بالمقدار، واجرى لهم فيها قمر الليل وشمس النهار يتعاقبان بمصالحهم دائبين، فجعل لهم الليل لباسا، والنهار معاشا، وخالف- منا منه عليهم وتطولا- بين قمر الليل وشمس النهار، فمحا آية الليل وجعل آية النهار مبصرة، كما قال جل جلاله وتقدست أسماؤه: «وجعلنا الليل والنهار آيتين فمحونا آية الليل وجعلنا آية النهار مبصرة لتبتغوا فضلا
+
+Vol. 01, p. 004
+من ربكم ولتعلموا عدد السنين والحساب وكل شيء فصلناه تفصيلا» .
+
+وليصلوا بذلك إلى العلم بأوقات فروضهم التي فرضها عليهم في ساعات الليل والنهار والشهور والسنين، من الصلوات والزكوات والحج والصيام وغير ذلك من فروضهم، وحين حل ديونهم وحقوقهم، كما قال عز وجل: «يسئلونك عن الأهلة قل هي مواقيت للناس والحج» ، وقال: «هو الذي جعل الشمس ضياء والقمر نورا وقدره منازل لتعلموا عدد السنين والحساب ما خلق الله ذلك إلا بالحق يفصل الآيات لقوم يعلمون إن في اختلاف الليل والنهار وما خلق الله في السماوات والأرض لآيات لقوم يتقون» .
+
+إنعاما منه بكل ذلك على خلقه، وتفضلا منه به عليهم وتطولا، فشكره على نعمه التي أنعمها عليهم من خلقه خلق عظيم، فزاد كثيرا منهم من آلائه وأياديه، على ما ابتدأهم به من فضله وطوله، كما وعدهم جل جلاله بقوله: «وإذ تأذن ربكم لئن شكرتم لأزيدنكم ولئن كفرتم إن عذابي لشديد» ، وجمع لهم الى الزيادة التي زادهم في عاجل دنياهم، الفوز بالنعيم المقيم، والخلود في جنات النعيم، في آجل آخرتهم وأخر لكثير منهم الزيادة التي وعدهم فمدهم الى حين مصيرهم اليه ووقت قدومهم عليه، توفيرا منه كرامته عليهم يوم تبلى السرائر وكفر نعمه خلق منهم عظيم، فجحدوا آلاءه وعبدوا سواه، فسلب كثيرا منهم ما ابتدأهم به من الفضل والإحسان، وأحل
+
+Vol. 01, p. 005
+بهم النقمة المهلكة في العاجل، وذخر لهم العقوبة المخزية في الآجل، ومتع كثيرا منهم بنعمه ايام حياتهم استدراجا منه لهم، وتوقيرا منه عليهم أوزارهم، ليستحقوا من عقوبته في الآجل ما قد أعد لهم.
+
+نعوذ بالله من عمل يقرب من سخطه، ونسأله التوفيق لما يدني من رضاه ومحبته.
+
+قال أبو جعفر: وأنا ذاكر في كتابي هذا من ملوك كل زمان، من لدن ابتدأ ربنا جل جلاله خلق خلقه إلى حال فنائهم، من انتهى إلينا خبره ممن ابتدأه الله تعالى بآلائه ونعمه فشكر نعمه، من رسول له مرسل، أو ملك مسلط، أو خليفة مستخلف، فزاده إلى ما ابتدأه به من نعمه في العاجل نعما، وإلى ما تفضل به عليه فضلا، ومن أخر ذلك له منهم، وجعله له عنده ذخرا ومن كفر منهم نعمه فسلبه ما ابتدأه به من نعمه، وعجل له نقمه ومن كفر منهم نعمه فمتعه بما أنعم به عليه إلى حين وفاته وهلاكه، مقرونا ذكر كل من أنا ذاكره منهم في كتابي هذا بذكر زمانه، وجمل ما كان من حوادث الأمور في عصره وأيامه، إذ كان الاستقصاء في ذلك يقصر عنه العمر، وتطول به الكتب، مع ذكري مع ذلك مبلغ مدة أكله، وحين أجله، بعد تقديمي أمام ذلك ما تقديمه بنا أولى، والابتداء به قبله أحجى، من البيان عن الزمان: ما هو؟ وكم قدر جميعه، وابتداء أوله، وانتهاء آخره؟ وهل كان قبل خلق الله تعالى إياه شيء غيره؟ وهل هو فان؟ وهل بعد فنائه شيء غير وجه المسبح الخلاق، تعالى ذكره؟
+
+وما الذي كان قبل خلق الله إياه؟ وما هو كائن بعد فنائه وانقضائه؟ وكيف
+
+Vol. 01, p. 006
+كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+وإلى الله عز وجل أنا راغب في العون على ما أقصده وأنويه، والتوفيق لما ألتمسه وأبغيه، فإنه ولي الحول والقوة، وصلى الله على محمد نبيه<h1 id="aa"> وآله وسلم تسليما.
+
+وليعلم الناظر</h1> في كتابنا هذا أن اعتمادي في كل ما أحضرت ذكره فيه مما شرطت أني راسمه فيه، إنما هو على ما رويت من الأخبار التي أنا ذاكرها فيه، والآثار التي أنا مسندها إلى رواتها فيه، دون ما أدرك بحجج العقول، واستنبط
+
+Vol. 01, p. 007
+بفكر النفوس، إلا اليسير القليل منه، إذ كان العلم بما كان من أخبار الماضين، وما هو كائن من أنباء الحادثين، غير واصل إلى من لم يشاهدهم ولم يدرك زمانهم، إلا بأخبار المخبرين، ونقل الناقلين، دون الاستخراج بالعقول، والاستنباط بفكر النفوس فما يكن في كتابي هذا من خبر ذكرناه عن بعض الماضين مما يستنكره قارئه، أو يستشنعه سامعه، من أجل أنه لم يعرف له وجها في الصحة، ولا معنى في الحقيقة، فليعلم انه لم يؤت في ذلك من قبلنا، وإنما أتى من قبل بعض ناقليه إلينا، وإنا إنما أدينا ذلك على نحو ما أدي إلينا
+
+كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+إلى الله عز وجل أنا راغب في العون على ما أقصده وأنويه، والتوفيق لما ألتمسه وأبغيه، فإنه ولي الحول والقوة، وصلى الله على محمد نبيه<h1 id="aaa"> وآله وسلم تسليما.
+
+  وليعلم الناظر</h1>
+  كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+  كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+  كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+  كان ابتداء خلق الله تعالى إياه؟ وكيف يكون فناؤه؟ والدلالة على أن لا قديم إلا الله الواحد القهار، الذي له ملك السموات والأرض وما بينهما وما تحت الثرى بوجيز من الدلالة غير طويل، إذ لم نقصد بكتابنا هذا قصد الاحتجاج لذلك، بل لما ذكرنا من تاريخ الملوك الماضين وجمل من أخبارهم، وأزمان الرسل والأنبياء ومقادير أعمارهم ، وأيام الخلفاء السالفين وبعض سيرهم، ومبالغ ولاياتهم، والكائن الذي كان من الأحداث في أعصارهم ثم أنا متبع آخر ذلك كله- إن شاء الله وأيد منه بعون وقوة- ذكر صحابه نبينا محمد ص وأسمائهم وكناهم ومبالغ أنسابهم ومبالغ أعمارهم، ووقت وفاة كل إنسان منهم، والموضع الذي كانت به وفاته ثم متبعهم ذكر من كان بعدهم من التابعين لهم بإحسان، على نحو ما شرطنا من ذكرهم ثم ملحق بهم ذكر من كان بعدهم من الخلف لهم كذلك، وزائد في أمورهم للإبانة عمن حمدت منهم روايته، وتقبلت أخباره، ومن رفضت منهم روايته ونبذت أخباره، ومن وهن منهم نقله، وضعف خبره وما السبب الذي من أجله نبذ من نبذ منهم خبره، والعلة التي من أجلها وهن من وهن منهم نقله.
+
+
+
+        </div>
+      </div>
+
+      <div class="row mt-5" id='footer'>
+        <div class="col-md-12">
+          The KITAB project is based at the Institute for the Study of Muslim Civilizations (ISMC) at Aga Khan
+          University, London, and has received funding from the European Research Council (ERC) under the European
+          Union&apos;s
+          Horizon 2020 research and innovation programme (Grant agreement No. 772989)
+
+        </div>
+        <div class="col-md-12">
+          <img id="logos" src="../img/AKU-EU-ERC-three-logos.jpg" alt="Logos" height="50" />
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  </div>
+ 
+
+
+  <script>
     var pageSel = document.getElementById("page-select");
     var volSel = document.getElementById("vol-select");
     var thisVolume = "01";
@@ -144,66 +258,66 @@
     console.log("Applied CollapsibleLists");
 
     $(document).ready(function () {
-        console.log("Load initial volume "+thisVolume);
-        loadVolume(thisVolume).then(res => {
-          console.log("Initial volume loaded");
-          $('#loading').hide();
-          $('#loading').fadeOut("slow");
-        });
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 80) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-        // scroll body to 0px on click
-        $('#back-to-top').click(function () {
-            $('body,html').animate({
-                scrollTop: 0
-            }, 400);
-            return false;
-        });
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
+      console.log("Load initial volume " + thisVolume);
+      loadVolume(thisVolume).then(res => {
+        console.log("Initial volume loaded");
+        $('#loading').hide();
+        $('#loading').fadeOut("slow");
+      });
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 80) {
+          $('#back-to-top').fadeIn();
+        } else {
+          $('#back-to-top').fadeOut();
+        }
+      });
+      // scroll body to 0px on click
+      $('#back-to-top').click(function () {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 400);
+        return false;
+      });
+      $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+      });
 
-        $(".font-default").click(function () {
+      $(".font-default").click(function () {
 
-            $('#wrapper').toggleClass("font-increase", "font-default");
-        });
+        $('#wrapper').toggleClass("font-increase", "font-default");
+      });
 
-        $(".bi-lightbulb-off").click(function () {
-            $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
-            $('.page-wrapper').toggleClass("night-mode", "");
-            $('.navbar-light').toggleClass("night-mode", "");
-            console.log(this);
+      $(".bi-lightbulb-off").click(function () {
+        $('.bi-lightbulb-off').toggleClass("bi-lightbulb", "bi-lightbulb-off");
+        $('.page-wrapper').toggleClass("night-mode", "");
+        $('.navbar-light').toggleClass("night-mode", "");
+        console.log(this);
 
-        });
-        $('.toc-item').click(function(event) {
-            /*console.log('toc item clicked');*/
-            event.preventDefault();
-            var clickedElement = event.target;
-            /*console.log(clickedElement);*/
-            var href = clickedElement.getAttribute("href");
-            /*console.log('href: '+href);*/
-            var vol = href.substring(0,2);
-            var head = href.split('head').pop();
-            var anchorId = "head"+head;
-            goToAnchor(vol, anchorId);
-            return false;
-        } );
+      });
+      $('.toc-item').click(function (event) {
+        /*console.log('toc item clicked');*/
+        event.preventDefault();
+        var clickedElement = event.target;
+        /*console.log(clickedElement);*/
+        var href = clickedElement.getAttribute("href");
+        /*console.log('href: '+href);*/
+        var vol = href.substring(0, 2);
+        var head = href.split('head').pop();
+        var anchorId = "head" + head;
+        goToAnchor(vol, anchorId);
+        return false;
+      });
     });
 
     function loadPageNumbers(vol, page) {
       /*var pageSel = document.getElementById("page-select");*/
       pageSel.innerHTML = '';
-      volPages[vol].forEach(function(p, index) {
+      volPages[vol].forEach(function (p, index) {
         pageSel.options[pageSel.options.length] = new Option(p, p);
       });
       if (page) {
-        pageSel.value=page;
+        pageSel.value = page;
       }
     }
 
@@ -213,7 +327,7 @@
       /*console.log(Object.keys(volPages));*/
       /*console.log(Object.keys(volPages).sort());*/
 
-      Object.keys(volPages).sort().forEach(function(v, index) {
+      Object.keys(volPages).sort().forEach(function (v, index) {
         /*console.log(v);*/
         volSel.options[volSel.options.length] = new Option(v, v);
       });
@@ -223,8 +337,8 @@
     async function loadVolume(vol) {
       /*Load volume json */
       var page = pageSel.value;
-      console.log("loading volume "+vol);
-      await $.getJSON(vol+".json", function(json){
+      console.log("loading volume " + vol);
+      await $.getJSON(vol + ".json", function (json) {
         $('#loading').style.display = "block";
         $('#content').empty().append(json["content"]);
         /*console.log("json loaded");*/
@@ -235,100 +349,23 @@
         loadVolumeNumbers(vol);
         loadPageNumbers(vol, page);
         return true;
-      } );
+      });
     }
 
-    function goToAnchor(vol, anchorId) {
-      if (vol != window.thisVolume) {
-        loadVolume(vol, false).then(res => {
-          console.log("Volume loaded");
-          console.log("Go to anchor "+anchorId);
-          /*move the volume page to the element with id=anchorId*/
-          /*var targetAnchor = document.getElementById(anchorId);
-          targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
-          console.log(targetAnchor);*/
-          /*window.location.hash = "";
-          window.location.hash = anchorId;
-          window.location.hash = anchorId;
-          console.log("#"+anchorId);*/
-          /*//This approach does not work at all: scrolls only main window.
-          var targetAnchor = $("#"+anchorId);
-          //$("#content").animate(
-          $("html, body").animate(
-            {scrollTop: targetAnchor.offset().top},
-            1000
-          );*/
-          /*//This approach does not work at all: scrolls only main window.
-          var targetAnchor = document.getElementById(anchorId);
-          var rect = targetAnchor.getBoundingClientRect();
-          console.log(targetAnchor);
-          console.log(rect);
-          var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-          window.scroll({
-            top: rect.top + rect.height / 2 - viewHeight /2,
-            behavior: 'smooth'
-          });*/
-          var targetAnchor = document.getElementById(anchorId);
-          var contentDiv = document.getElementsByClassName("book-body")[0];
-          var topPos = contentDiv.offsetTop;
-          var windowSize = $(window).height();
-          console.log("topPos: "+topPos);
-          console.log("targetPos: "+targetAnchor.offsetTop);
-          console.log("windowSize:"+windowSize)
-          console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
-          contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
-        });
-      } else {
-        /*move the volume page to the element with id=anchorId*/
-        /*var targetAnchor = document.getElementById(anchorId);
-        targetAnchor.scrollIntoView({block: 'nearest'});  // this does not always work...
-        console.log(targetAnchor);*/
-        /*window.location.hash = "";
-        window.location.hash = anchorId;
-        window.location.hash = anchorId;
-        console.log("#"+anchorId);*/
-        /*//This approach does not work at all: scrolls only main window.
-        var targetAnchor = $("#"+anchorId);
-        //$("#content").animate(
-        $("html, body").animate(
-          {scrollTop: targetAnchor.offset().top},
-          1000
-        );*/
-        /*//This approach does not work at all: scrolls only main window.
-        var targetAnchor = document.getElementById(anchorId);
-        var rect = targetAnchor.getBoundingClientRect();
-        console.log(targetAnchor);
-        console.log(rect);
-        var viewHeight=Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-        window.scroll({
-          top: rect.top + rect.height / 2 - viewHeight /2,
-          behavior: 'smooth'
-        });*/
-        var targetAnchor = document.getElementById(anchorId);
-        var contentDiv = document.getElementsByClassName("book-body")[0];
-        var topPos = contentDiv.offsetTop;
-        var windowSize = $(window).height();
-        console.log("topPos: "+topPos);
-        console.log("targetPos: "+targetAnchor.offsetTop);
-        console.log("windowSize:"+windowSize)
-        console.log("targetAnchor.offsetTop-windowSize/3 = "+(targetAnchor.offsetTop-topPos-windowSize/2));
-        contentDiv.scrollTop = targetAnchor.offsetTop-topPos-windowSize/2;
-      }
-    }
-
+    
     function padWithZeros(number, width) {
       number = number + "";
       if (number.length >= width) {
         return number;
       } else {
-        return new Array(width - number.length +1).join("0") + number;
+        return new Array(width - number.length + 1).join("0") + number;
       }
     }
-    document.getElementById("nav-form").addEventListener("submit", function(event) {
+    document.getElementById("nav-form").addEventListener("submit", function (event) {
       event.preventDefault();
       /*console.log("Clicked Go");*/
       var vol = volSel.value;
-      console.log("vol: "+vol);
+      console.log("vol: " + vol);
       /*var targetPage = parseInt(pageSel.value, 10);
       if (page >= 1) {
         page = page-1; //page number is at bottom of page
@@ -341,20 +378,21 @@
         targetPage = pages[index-1];
       }*/
 
-      console.log("targetPage: "+targetPage);
-      var anchor = "v"+vol+"p"+targetPage;
+      console.log("targetPage: " + targetPage);
+      var anchor = "v" + vol + "p" + targetPage;
       goToAnchor(vol, anchor);
       return false;
     });
 
     /*Adapt the page numbers list when the volume number changes:*/
-    volSel.addEventListener("change", function(event) {
+    volSel.addEventListener("change", function (event) {
       var vol = this.value;
       var page = pageSel.value;
       loadPageNumbers(vol, page);
     });
 
 
-</script>
+  </script>
 </body>
+
 </html>
