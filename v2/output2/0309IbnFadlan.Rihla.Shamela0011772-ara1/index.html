@@ -83,7 +83,7 @@
 <i class="btn bi bi-info"></i>
 </a>
 <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
-<div class="col-12" id="metadata-content"><label>status: pri</label><label>author_lat: Ibn Fadlan</label><label>title_ar: رحلة ابن فضلان إلى بلاد الترك والروس والصقالبة</label><label>id: Shamela0011772</label><label>tags: COMPLETED :: CENT0400 :: GEO :: PPE :: _BULDAN :: _JUGHRAFIYA :: _MUDHAKKARAT :: _RIHLAT :: _TARIKH :: GAL@period-classical :: GAL@literature-islamic :: GAL@geographies :: GAL@0750-1000CE :: GAL@literature-arabic :: Shamela@البلدان والجغرافيا والرحلات</label><label>url: https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0309IbnFadlan/0309IbnFadlan.Rihla/0309IbnFadlan.Rihla.Shamela0011772-ara1.completed</label><label>ed_info: دار السويدي، أبو ظبي :: http://www.worldcat.org/oclc/62119608</label><label>tok_length: 17073</label><label>char_length: 74625</label><label>author_ar: أحمد بن فضلان بن العباس بن راشد ابن حماد (المتوفى: بعد 310هـ)</label><label>date: 0309</label><label>author_lat_shuhra: </label><label>book: 0309IbnFadlan.Rihla</label><label>author_lat_full_name: </label><label>title_lat: Rihla</label><label>author_from_uri: Ibn Fadlan</label><label>versionUri: 0309IbnFadlan.Rihla.Shamela0011772-ara1</label>
+<div class="col-12" id="metadata-content"><label>versionUri: 0309IbnFadlan.Rihla.Shamela0011772-ara1</label><label>book: 0309IbnFadlan.Rihla</label><label>char_length: 74625</label><label>ed_info: دار السويدي، أبو ظبي :: http://www.worldcat.org/oclc/62119608</label><label>author_lat_shuhra: </label><label>url: https://raw.githubusercontent.com/OpenITI/0325AH/master/data/0309IbnFadlan/0309IbnFadlan.Rihla/0309IbnFadlan.Rihla.Shamela0011772-ara1.completed</label><label>author_lat: Ibn Fadlan</label><label>author_from_uri: Ibn Fadlan</label><label>id: Shamela0011772</label><label>author_ar: أحمد بن فضلان بن العباس بن راشد ابن حماد (المتوفى: بعد 310هـ)</label><label>tags: COMPLETED :: CENT0400 :: GEO :: PPE :: _BULDAN :: _JUGHRAFIYA :: _MUDHAKKARAT :: _RIHLAT :: _TARIKH :: GAL@period-classical :: GAL@literature-islamic :: GAL@geographies :: GAL@0750-1000CE :: GAL@literature-arabic :: Shamela@البلدان والجغرافيا والرحلات</label><label>title_ar: رحلة ابن فضلان إلى بلاد الترك والروس والصقالبة</label><label>status: pri</label><label>title_lat: Rihla</label><label>tok_length: 17073</label><label>author_lat_full_name: </label><label>date: 0309</label>
 </div>
 </div>
 </div>
@@ -292,10 +292,10 @@
     async function loadVolume(vol) {
       /*Load volume json */
       var page = pageSel.value;
+      $('#loading').show();
       console.log("loading volume " + vol);
       await $.getJSON(vol + ".json", function (json) {
         console.log(json)
-        $('#loading').show();
         $('#content').empty().append(json["content"]);
         /*console.log("json loaded");*/
         window.thisVolume = vol;

@@ -324,10 +324,10 @@
     async function loadVolume(vol) {
       /*Load volume json */
       var page = pageSel.value;
+      $('#loading').show();
       console.log("loading volume " + vol);
       await $.getJSON(vol + ".json", function (json) {
         console.log(json)
-        $('#loading').show();
         $('#content').empty().append(json["content"]);
         /*console.log("json loaded");*/
         window.thisVolume = vol;
