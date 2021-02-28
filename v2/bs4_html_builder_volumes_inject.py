@@ -329,6 +329,9 @@ if __name__ == "__main__":
     #path = r"/mnt/c/Development Work/0400AH/data/test/"
     path = r"/home/admin-kitab/Documents/OpenITI/Github_clone/0325AH/data/0310Tabari/0310Tabari.Tarikh"
     meta_fp= r'/home/admin-kitab/Documents/Projects/kitab-metadata-automation/output/OpenITI_Github_clone_metadata_light.csv'
-    template_path= r"template/main_volumes.html"
     outfolder = r"/home/admin-kitab/Documents/Projects/Sohail/lite-reader"
+    template_path= r"template/main_volumes.html"
+    #path = "test"
+    #meta_fp = "metadata.csv"
+    #outfolder = "output2"
     convert_all_files_in_folder(path, meta_fp, template_path, outfolder)

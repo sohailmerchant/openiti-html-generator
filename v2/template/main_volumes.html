@@ -189,7 +189,7 @@
             top: rect.top + rect.height / 2 - viewHeight /2,
             behavior: 'smooth'
           });*/
-          var targetAnchor = document.getElementById(anchorId);
+          /*var targetAnchor = document.getElementById(anchorId);
           var contentDiv = document.getElementsByClassName("book-body")[0];
           var topPos = contentDiv.offsetTop;
           var windowSize = $(window).height();
@@ -197,7 +197,9 @@
           console.log("targetPos: " + targetAnchor.offsetTop);
           console.log("windowSize:" + windowSize)
           console.log("targetAnchor.offsetTop-windowSize/3 = " + (targetAnchor.offsetTop - topPos - windowSize / 2));
-          contentDiv.scrollTop = targetAnchor.offsetTop - topPos - windowSize / 2;
+          contentDiv.scrollTop = targetAnchor.offsetTop - topPos - windowSize / 2;*/
+          var targetAnchor = document.getElementById(anchorId);
+          targetAnchor.scrollIntoView({"block": "start"});
         });
       } else {
         /*move the volume page to the element with id=anchorId*/
@@ -225,7 +227,7 @@
           top: rect.top + rect.height / 2 - viewHeight /2,
           behavior: 'smooth'
         });*/
-        var targetAnchor = document.getElementById(anchorId);
+        /*var targetAnchor = document.getElementById(anchorId);
         var contentDiv = document.getElementsByClassName("book-body")[0];
         var topPos = contentDiv.offsetTop;
         var windowSize = $(window).height();
@@ -233,7 +235,9 @@
         console.log("targetPos: " + targetAnchor.offsetTop);
         console.log("windowSize:" + windowSize)
         console.log("targetAnchor.offsetTop-windowSize/3 = " + (targetAnchor.offsetTop - topPos - windowSize / 2));
-        contentDiv.scrollTop = targetAnchor.offsetTop - topPos - windowSize / 2;
+        contentDiv.scrollTop = targetAnchor.offsetTop - topPos - windowSize / 2;*/
+        var targetAnchor = document.getElementById(anchorId);
+        targetAnchor.scrollIntoView({"block": "start"});
       }
     }
 
@@ -320,10 +324,10 @@
     async function loadVolume(vol) {
       /*Load volume json */
       var page = pageSel.value;
+      $('#loading').show();
       console.log("loading volume " + vol);
       await $.getJSON(vol + ".json", function (json) {
         console.log(json)
-        $('#loading').show();
         $('#content').empty().append(json["content"]);
         /*console.log("json loaded");*/
         window.thisVolume = vol;
@@ -358,9 +362,9 @@
       var targetPage = pageSel.value;
       var pages = volPages[vol];
       var index = pages.indexOf(targetPage);
-      /*if (index > 0) {
+      if (index > 0) {
         targetPage = pages[index-1];
-      }*/
+      }
 
       console.log("targetPage: " + targetPage);
       var anchor = "v" + vol + "p" + targetPage;
