@@ -42,8 +42,6 @@ html, body {
     padding: 0 15px;
     border-bottom: none;
     color: #ccc;
-    
-    line-height: 50px;
     -webkit-box-shadow: none!important;
     box-shadow: none!important;
     position: relative;

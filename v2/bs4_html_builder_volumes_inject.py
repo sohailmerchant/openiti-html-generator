@@ -327,7 +327,8 @@ def copy_infrastructure(outfolder, infra_folders=["css", "js", "img"]):
 if __name__ == "__main__":
     #path = r"/mnt/c/Development Work/0400AH/data/"
     #path = r"/mnt/c/Development Work/0400AH/data/test/"
-    path = r"/home/admin-kitab/Documents/OpenITI/Github_clone/0325AH/data/0310Tabari/0310Tabari.Tarikh"
+    #path = r"/home/admin-kitab/Documents/OpenITI/Github_clone/0325AH/data/0310Tabari/0310Tabari.Tarikh"
+    path = r"/home/admin-kitab/Documents/OpenITI/Github_clone"
     meta_fp= r'/home/admin-kitab/Documents/Projects/kitab-metadata-automation/output/OpenITI_Github_clone_metadata_light.csv'
     outfolder = r"/home/admin-kitab/Documents/Projects/Sohail/lite-reader"
     template_path= r"template/main_volumes.html"
